@@ -1,0 +1,467 @@
+2026-10-15T00:17:01.993908+03:00 bastion-01 CRON[1006]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T01:17:01.414002+03:00 bastion-01 CRON[1009]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T02:17:01.075954+03:00 bastion-01 CRON[1010]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T03:12:04.861083+03:00 bastion-01 sshd[1820]: Failed password for root from 203.0.113.45 port 14294 ssh2
+2026-10-15T03:12:08.281734+03:00 bastion-01 sshd[1828]: Failed password for root from 203.0.113.45 port 57140 ssh2
+2026-10-15T03:12:12.433097+03:00 bastion-01 sshd[1831]: Failed password for root from 203.0.113.45 port 60970 ssh2
+2026-10-15T03:12:14.614292+03:00 bastion-01 sshd[1840]: Failed password for root from 203.0.113.45 port 51203 ssh2
+2026-10-15T03:12:16.438210+03:00 bastion-01 sshd[1843]: Failed password for root from 203.0.113.45 port 64118 ssh2
+2026-10-15T03:12:19.397999+03:00 bastion-01 sshd[1845]: Failed password for invalid user admin from 203.0.113.45 port 40826 ssh2
+2026-10-15T03:12:19.726289+03:00 bastion-01 sshd[1853]: Connection closed by authenticating user root 203.0.113.45 port 56840 [preauth]
+2026-10-15T03:12:22.370098+03:00 bastion-01 sshd[1858]: Failed password for root from 203.0.113.45 port 24133 ssh2
+2026-10-15T03:12:25.679688+03:00 bastion-01 sshd[1865]: Failed password for root from 203.0.113.45 port 40045 ssh2
+2026-10-15T03:12:28.399165+03:00 bastion-01 sshd[1873]: Failed password for root from 203.0.113.45 port 49899 ssh2
+2026-10-15T03:12:31.841956+03:00 bastion-01 sshd[1878]: Failed password for root from 203.0.113.45 port 36208 ssh2
+2026-10-15T03:12:33.092201+03:00 bastion-01 sshd[1882]: Failed password for root from 203.0.113.45 port 25731 ssh2
+2026-10-15T03:12:36.341645+03:00 bastion-01 sshd[1886]: Failed password for root from 203.0.113.45 port 56296 ssh2
+2026-10-15T03:12:36.934547+03:00 bastion-01 sshd[1893]: Connection closed by authenticating user root 203.0.113.45 port 14413 [preauth]
+2026-10-15T03:12:38.314382+03:00 bastion-01 sshd[1901]: Failed password for root from 203.0.113.45 port 17837 ssh2
+2026-10-15T03:12:42.542583+03:00 bastion-01 sshd[1908]: Failed password for root from 203.0.113.45 port 36315 ssh2
+2026-10-15T03:12:46.486799+03:00 bastion-01 sshd[1915]: Failed password for root from 203.0.113.45 port 29208 ssh2
+2026-10-15T03:12:49.475073+03:00 bastion-01 sshd[1921]: Failed password for root from 203.0.113.45 port 45341 ssh2
+2026-10-15T03:12:51.103773+03:00 bastion-01 sshd[1925]: Failed password for root from 203.0.113.45 port 35446 ssh2
+2026-10-15T03:12:54.973510+03:00 bastion-01 sshd[1934]: Failed password for root from 203.0.113.45 port 27296 ssh2
+2026-10-15T03:12:54.922573+03:00 bastion-01 sshd[1937]: Connection closed by authenticating user root 203.0.113.45 port 38645 [preauth]
+2026-10-15T03:12:56.461544+03:00 bastion-01 sshd[1944]: Failed password for invalid user admin from 203.0.113.45 port 32921 ssh2
+2026-10-15T03:13:00.725172+03:00 bastion-01 sshd[1950]: Failed password for invalid user admin from 203.0.113.45 port 39520 ssh2
+2026-10-15T03:13:04.380336+03:00 bastion-01 sshd[1953]: Failed password for root from 203.0.113.45 port 7069 ssh2
+2026-10-15T03:13:07.537493+03:00 bastion-01 sshd[1958]: Failed password for root from 203.0.113.45 port 5944 ssh2
+2026-10-15T03:13:09.723399+03:00 bastion-01 sshd[1963]: Failed password for root from 203.0.113.45 port 59646 ssh2
+2026-10-15T03:13:12.661757+03:00 bastion-01 sshd[1970]: Failed password for invalid user admin from 203.0.113.45 port 34373 ssh2
+2026-10-15T03:13:12.304009+03:00 bastion-01 sshd[1979]: Connection closed by authenticating user root 203.0.113.45 port 11273 [preauth]
+2026-10-15T03:13:16.432285+03:00 bastion-01 sshd[1983]: Failed password for root from 203.0.113.45 port 59556 ssh2
+2026-10-15T03:13:18.370340+03:00 bastion-01 sshd[1985]: Failed password for root from 203.0.113.45 port 38048 ssh2
+2026-10-15T03:13:22.725341+03:00 bastion-01 sshd[1986]: Failed password for invalid user admin from 203.0.113.45 port 42738 ssh2
+2026-10-15T03:13:25.745157+03:00 bastion-01 sshd[1991]: Failed password for root from 203.0.113.45 port 1206 ssh2
+2026-10-15T03:13:29.416878+03:00 bastion-01 sshd[1996]: Failed password for root from 203.0.113.45 port 61122 ssh2
+2026-10-15T03:13:31.206202+03:00 bastion-01 sshd[1997]: Failed password for root from 203.0.113.45 port 44809 ssh2
+2026-10-15T03:13:31.806319+03:00 bastion-01 sshd[2005]: Connection closed by authenticating user root 203.0.113.45 port 12505 [preauth]
+2026-10-15T03:13:35.539320+03:00 bastion-01 sshd[2014]: Failed password for root from 203.0.113.45 port 58114 ssh2
+2026-10-15T03:13:37.152414+03:00 bastion-01 sshd[2016]: Failed password for root from 203.0.113.45 port 27965 ssh2
+2026-10-15T03:13:39.030444+03:00 bastion-01 sshd[2018]: Failed password for root from 203.0.113.45 port 34413 ssh2
+2026-10-15T03:13:41.514249+03:00 bastion-01 sshd[2027]: Failed password for root from 203.0.113.45 port 63141 ssh2
+2026-10-15T03:13:44.681679+03:00 bastion-01 sshd[2028]: Failed password for root from 203.0.113.45 port 53885 ssh2
+2026-10-15T03:13:46.150918+03:00 bastion-01 sshd[2034]: Failed password for root from 203.0.113.45 port 38959 ssh2
+2026-10-15T03:13:46.371033+03:00 bastion-01 sshd[2038]: Connection closed by authenticating user root 203.0.113.45 port 47912 [preauth]
+2026-10-15T03:13:49.901070+03:00 bastion-01 sshd[2040]: Failed password for root from 203.0.113.45 port 18496 ssh2
+2026-10-15T03:13:53.654314+03:00 bastion-01 sshd[2048]: Failed password for root from 203.0.113.45 port 13584 ssh2
+2026-10-15T03:13:56.610965+03:00 bastion-01 sshd[2055]: Failed password for root from 203.0.113.45 port 15445 ssh2
+2026-10-15T03:13:58.261440+03:00 bastion-01 sshd[2059]: Failed password for root from 203.0.113.45 port 41667 ssh2
+2026-10-15T03:14:00.330084+03:00 bastion-01 sshd[2062]: Failed password for root from 203.0.113.45 port 62026 ssh2
+2026-10-15T03:14:02.318427+03:00 bastion-01 sshd[2070]: Failed password for invalid user admin from 203.0.113.45 port 54494 ssh2
+2026-10-15T03:14:02.929912+03:00 bastion-01 sshd[2075]: Connection closed by authenticating user root 203.0.113.45 port 28442 [preauth]
+2026-10-15T03:14:05.710181+03:00 bastion-01 sshd[2079]: Failed password for invalid user admin from 203.0.113.45 port 5449 ssh2
+2026-10-15T03:14:08.433580+03:00 bastion-01 sshd[2083]: Failed password for root from 203.0.113.45 port 39350 ssh2
+2026-10-15T03:14:11.023515+03:00 bastion-01 sshd[2091]: Failed password for root from 203.0.113.45 port 47670 ssh2
+2026-10-15T03:14:13.397420+03:00 bastion-01 sshd[2097]: Failed password for root from 203.0.113.45 port 12160 ssh2
+2026-10-15T03:14:15.415264+03:00 bastion-01 sshd[2102]: Failed password for root from 203.0.113.45 port 58846 ssh2
+2026-10-15T03:14:19.913818+03:00 bastion-01 sshd[2111]: Failed password for root from 203.0.113.45 port 22979 ssh2
+2026-10-15T03:14:19.422781+03:00 bastion-01 sshd[2117]: Connection closed by authenticating user root 203.0.113.45 port 26294 [preauth]
+2026-10-15T03:14:23.865940+03:00 bastion-01 sshd[2124]: Failed password for root from 203.0.113.45 port 9103 ssh2
+2026-10-15T03:14:26.489699+03:00 bastion-01 sshd[2128]: Failed password for root from 203.0.113.45 port 26410 ssh2
+2026-10-15T03:14:29.292692+03:00 bastion-01 sshd[2129]: Failed password for root from 203.0.113.45 port 29569 ssh2
+2026-10-15T03:14:33.253545+03:00 bastion-01 sshd[2132]: Failed password for root from 203.0.113.45 port 53772 ssh2
+2026-10-15T03:14:37.571333+03:00 bastion-01 sshd[2137]: Failed password for root from 203.0.113.45 port 13888 ssh2
+2026-10-15T03:14:39.166956+03:00 bastion-01 sshd[2141]: Failed password for root from 203.0.113.45 port 31632 ssh2
+2026-10-15T03:14:39.226991+03:00 bastion-01 sshd[2147]: Connection closed by authenticating user root 203.0.113.45 port 25135 [preauth]
+2026-10-15T03:14:43.311693+03:00 bastion-01 sshd[2151]: Failed password for root from 203.0.113.45 port 42268 ssh2
+2026-10-15T03:14:46.708105+03:00 bastion-01 sshd[2159]: Failed password for root from 203.0.113.45 port 15918 ssh2
+2026-10-15T03:14:48.616105+03:00 bastion-01 sshd[2167]: Failed password for invalid user admin from 203.0.113.45 port 18113 ssh2
+2026-10-15T03:14:51.222866+03:00 bastion-01 sshd[2176]: Failed password for root from 203.0.113.45 port 27510 ssh2
+2026-10-15T03:14:53.095912+03:00 bastion-01 sshd[2185]: Failed password for invalid user admin from 203.0.113.45 port 9071 ssh2
+2026-10-15T03:14:57.030111+03:00 bastion-01 sshd[2192]: Failed password for invalid user admin from 203.0.113.45 port 49254 ssh2
+2026-10-15T03:14:57.325885+03:00 bastion-01 sshd[2195]: Connection closed by authenticating user root 203.0.113.45 port 44115 [preauth]
+2026-10-15T03:14:59.813839+03:00 bastion-01 sshd[2198]: Failed password for root from 203.0.113.45 port 6662 ssh2
+2026-10-15T03:15:01.071387+03:00 bastion-01 sshd[2200]: Failed password for root from 203.0.113.45 port 44457 ssh2
+2026-10-15T03:15:05.795296+03:00 bastion-01 sshd[2209]: Failed password for invalid user admin from 203.0.113.45 port 53792 ssh2
+2026-10-15T03:15:08.092211+03:00 bastion-01 sshd[2214]: Failed password for root from 203.0.113.45 port 48125 ssh2
+2026-10-15T03:15:10.296080+03:00 bastion-01 sshd[2221]: Failed password for root from 203.0.113.45 port 54555 ssh2
+2026-10-15T03:15:13.812643+03:00 bastion-01 sshd[2229]: Failed password for root from 203.0.113.45 port 60591 ssh2
+2026-10-15T03:15:13.982243+03:00 bastion-01 sshd[2232]: Connection closed by authenticating user root 203.0.113.45 port 42182 [preauth]
+2026-10-15T03:15:16.940513+03:00 bastion-01 sshd[2238]: Failed password for root from 203.0.113.45 port 25048 ssh2
+2026-10-15T03:15:19.260488+03:00 bastion-01 sshd[2246]: Failed password for root from 203.0.113.45 port 47147 ssh2
+2026-10-15T03:15:22.190481+03:00 bastion-01 sshd[2248]: Failed password for root from 203.0.113.45 port 42234 ssh2
+2026-10-15T03:15:25.747201+03:00 bastion-01 sshd[2252]: Failed password for root from 203.0.113.45 port 60837 ssh2
+2026-10-15T03:15:29.451624+03:00 bastion-01 sshd[2255]: Failed password for root from 203.0.113.45 port 3645 ssh2
+2026-10-15T03:15:31.774188+03:00 bastion-01 sshd[2262]: Failed password for root from 203.0.113.45 port 11260 ssh2
+2026-10-15T03:15:31.326020+03:00 bastion-01 sshd[2271]: Connection closed by authenticating user root 203.0.113.45 port 3595 [preauth]
+2026-10-15T03:15:35.597861+03:00 bastion-01 sshd[2275]: Failed password for root from 203.0.113.45 port 12798 ssh2
+2026-10-15T03:15:38.702686+03:00 bastion-01 sshd[2282]: Failed password for root from 203.0.113.45 port 17716 ssh2
+2026-10-15T03:15:42.117306+03:00 bastion-01 sshd[2283]: Failed password for root from 203.0.113.45 port 62344 ssh2
+2026-10-15T03:15:46.256331+03:00 bastion-01 sshd[2284]: Failed password for root from 203.0.113.45 port 3839 ssh2
+2026-10-15T03:15:50.220346+03:00 bastion-01 sshd[2290]: Failed password for root from 203.0.113.45 port 52891 ssh2
+2026-10-15T03:15:53.728421+03:00 bastion-01 sshd[2297]: Failed password for root from 203.0.113.45 port 6669 ssh2
+2026-10-15T03:15:53.783875+03:00 bastion-01 sshd[2304]: Connection closed by authenticating user root 203.0.113.45 port 49778 [preauth]
+2026-10-15T03:15:57.094302+03:00 bastion-01 sshd[2313]: Failed password for invalid user admin from 203.0.113.45 port 19450 ssh2
+2026-10-15T03:16:00.975394+03:00 bastion-01 sshd[2321]: Failed password for invalid user admin from 203.0.113.45 port 28809 ssh2
+2026-10-15T03:16:03.533366+03:00 bastion-01 sshd[2329]: Failed password for root from 203.0.113.45 port 49429 ssh2
+2026-10-15T03:16:05.705818+03:00 bastion-01 sshd[2336]: Failed password for root from 203.0.113.45 port 14522 ssh2
+2026-10-15T03:16:09.513288+03:00 bastion-01 sshd[2339]: Failed password for invalid user admin from 203.0.113.45 port 52027 ssh2
+2026-10-15T03:16:11.273885+03:00 bastion-01 sshd[2348]: Failed password for root from 203.0.113.45 port 47078 ssh2
+2026-10-15T03:16:11.171647+03:00 bastion-01 sshd[2357]: Connection closed by authenticating user root 203.0.113.45 port 12462 [preauth]
+2026-10-15T03:16:15.062267+03:00 bastion-01 sshd[2361]: Failed password for root from 203.0.113.45 port 18081 ssh2
+2026-10-15T03:16:17.211194+03:00 bastion-01 sshd[2363]: Failed password for root from 203.0.113.45 port 28001 ssh2
+2026-10-15T03:16:21.702896+03:00 bastion-01 sshd[2371]: Failed password for root from 203.0.113.45 port 9973 ssh2
+2026-10-15T03:16:24.540416+03:00 bastion-01 sshd[2372]: Failed password for root from 203.0.113.45 port 16864 ssh2
+2026-10-15T03:16:28.731958+03:00 bastion-01 sshd[2378]: Failed password for root from 203.0.113.45 port 62355 ssh2
+2026-10-15T03:16:31.616094+03:00 bastion-01 sshd[2381]: Failed password for root from 203.0.113.45 port 47404 ssh2
+2026-10-15T03:16:31.349775+03:00 bastion-01 sshd[2385]: Connection closed by authenticating user root 203.0.113.45 port 37938 [preauth]
+2026-10-15T03:16:35.797459+03:00 bastion-01 sshd[2392]: Failed password for invalid user admin from 203.0.113.45 port 36954 ssh2
+2026-10-15T03:16:37.880264+03:00 bastion-01 sshd[2400]: Failed password for root from 203.0.113.45 port 11168 ssh2
+2026-10-15T03:16:40.012972+03:00 bastion-01 sshd[2405]: Failed password for invalid user admin from 203.0.113.45 port 8526 ssh2
+2026-10-15T03:16:43.939326+03:00 bastion-01 sshd[2406]: Failed password for root from 203.0.113.45 port 3868 ssh2
+2026-10-15T03:16:46.469781+03:00 bastion-01 sshd[2411]: Failed password for root from 203.0.113.45 port 8271 ssh2
+2026-10-15T03:16:48.596834+03:00 bastion-01 sshd[2419]: Failed password for root from 203.0.113.45 port 30192 ssh2
+2026-10-15T03:16:48.176260+03:00 bastion-01 sshd[2424]: Connection closed by authenticating user root 203.0.113.45 port 24811 [preauth]
+2026-10-15T03:16:52.786899+03:00 bastion-01 sshd[2432]: Failed password for root from 203.0.113.45 port 1732 ssh2
+2026-10-15T03:16:55.774895+03:00 bastion-01 sshd[2438]: Failed password for root from 203.0.113.45 port 48022 ssh2
+2026-10-15T03:16:59.455334+03:00 bastion-01 sshd[2446]: Failed password for root from 203.0.113.45 port 43301 ssh2
+2026-10-15T03:17:01.098702+03:00 bastion-01 CRON[1019]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T03:17:02.008705+03:00 bastion-01 sshd[2452]: Failed password for root from 203.0.113.45 port 36614 ssh2
+2026-10-15T03:17:05.658237+03:00 bastion-01 sshd[2457]: Failed password for invalid user admin from 203.0.113.45 port 43262 ssh2
+2026-10-15T03:17:09.684796+03:00 bastion-01 sshd[2462]: Failed password for invalid user admin from 203.0.113.45 port 43793 ssh2
+2026-10-15T03:17:09.145387+03:00 bastion-01 sshd[2464]: Connection closed by authenticating user root 203.0.113.45 port 17145 [preauth]
+2026-10-15T03:17:13.880362+03:00 bastion-01 sshd[2471]: Failed password for root from 203.0.113.45 port 51777 ssh2
+2026-10-15T03:17:15.886806+03:00 bastion-01 sshd[2480]: Failed password for root from 203.0.113.45 port 13196 ssh2
+2026-10-15T03:17:19.778382+03:00 bastion-01 sshd[2485]: Failed password for root from 203.0.113.45 port 52444 ssh2
+2026-10-15T03:17:23.335707+03:00 bastion-01 sshd[2491]: Failed password for root from 203.0.113.45 port 13118 ssh2
+2026-10-15T03:17:25.878518+03:00 bastion-01 sshd[2497]: Failed password for root from 203.0.113.45 port 37143 ssh2
+2026-10-15T03:17:28.594405+03:00 bastion-01 sshd[2499]: Failed password for root from 203.0.113.45 port 3727 ssh2
+2026-10-15T03:17:28.949166+03:00 bastion-01 sshd[2506]: Connection closed by authenticating user root 203.0.113.45 port 53635 [preauth]
+2026-10-15T03:17:30.523795+03:00 bastion-01 sshd[2513]: Failed password for invalid user admin from 203.0.113.45 port 33423 ssh2
+2026-10-15T03:17:34.148780+03:00 bastion-01 sshd[2515]: Failed password for root from 203.0.113.45 port 20656 ssh2
+2026-10-15T03:17:38.667686+03:00 bastion-01 sshd[2523]: Failed password for root from 203.0.113.45 port 10087 ssh2
+2026-10-15T03:17:41.502688+03:00 bastion-01 sshd[2531]: Failed password for root from 203.0.113.45 port 3641 ssh2
+2026-10-15T03:17:43.033576+03:00 bastion-01 sshd[2532]: Failed password for root from 203.0.113.45 port 25435 ssh2
+2026-10-15T03:17:47.446110+03:00 bastion-01 sshd[2541]: Failed password for invalid user admin from 203.0.113.45 port 52595 ssh2
+2026-10-15T03:17:47.075491+03:00 bastion-01 sshd[2546]: Connection closed by authenticating user root 203.0.113.45 port 10406 [preauth]
+2026-10-15T03:17:51.933886+03:00 bastion-01 sshd[2553]: Failed password for root from 203.0.113.45 port 47605 ssh2
+2026-10-15T03:17:54.947912+03:00 bastion-01 sshd[2556]: Failed password for root from 203.0.113.45 port 1600 ssh2
+2026-10-15T03:17:58.464682+03:00 bastion-01 sshd[2557]: Failed password for root from 203.0.113.45 port 20405 ssh2
+2026-10-15T03:18:02.491612+03:00 bastion-01 sshd[2561]: Failed password for root from 203.0.113.45 port 38216 ssh2
+2026-10-15T03:18:04.449183+03:00 bastion-01 sshd[2569]: Failed password for root from 203.0.113.45 port 34891 ssh2
+2026-10-15T03:18:08.420863+03:00 bastion-01 sshd[2572]: Failed password for invalid user admin from 203.0.113.45 port 57740 ssh2
+2026-10-15T03:18:08.850550+03:00 bastion-01 sshd[2574]: Connection closed by authenticating user root 203.0.113.45 port 64057 [preauth]
+2026-10-15T03:18:10.592469+03:00 bastion-01 sshd[2579]: Failed password for root from 203.0.113.45 port 22751 ssh2
+2026-10-15T03:18:14.688387+03:00 bastion-01 sshd[2587]: Failed password for root from 203.0.113.45 port 25183 ssh2
+2026-10-15T03:18:18.556168+03:00 bastion-01 sshd[2593]: Failed password for root from 203.0.113.45 port 57729 ssh2
+2026-10-15T03:18:22.711651+03:00 bastion-01 sshd[2597]: Failed password for root from 203.0.113.45 port 13400 ssh2
+2026-10-15T03:18:26.692565+03:00 bastion-01 sshd[2600]: Failed password for root from 203.0.113.45 port 6608 ssh2
+2026-10-15T03:18:30.377488+03:00 bastion-01 sshd[2607]: Failed password for root from 203.0.113.45 port 39085 ssh2
+2026-10-15T03:18:30.592251+03:00 bastion-01 sshd[2611]: Connection closed by authenticating user root 203.0.113.45 port 35756 [preauth]
+2026-10-15T03:18:33.189269+03:00 bastion-01 sshd[2615]: Failed password for root from 203.0.113.45 port 8511 ssh2
+2026-10-15T03:18:35.904054+03:00 bastion-01 sshd[2619]: Failed password for root from 203.0.113.45 port 8381 ssh2
+2026-10-15T03:18:38.702796+03:00 bastion-01 sshd[2628]: Failed password for root from 203.0.113.45 port 13314 ssh2
+2026-10-15T03:18:41.480410+03:00 bastion-01 sshd[2637]: Failed password for root from 203.0.113.45 port 15900 ssh2
+2026-10-15T03:18:43.771318+03:00 bastion-01 sshd[2639]: Failed password for root from 203.0.113.45 port 46684 ssh2
+2026-10-15T03:18:47.892901+03:00 bastion-01 sshd[2641]: Failed password for invalid user admin from 203.0.113.45 port 38173 ssh2
+2026-10-15T03:18:47.839211+03:00 bastion-01 sshd[2643]: Connection closed by authenticating user root 203.0.113.45 port 27764 [preauth]
+2026-10-15T03:18:50.531874+03:00 bastion-01 sshd[2652]: Failed password for root from 203.0.113.45 port 33997 ssh2
+2026-10-15T03:18:54.657032+03:00 bastion-01 sshd[2654]: Failed password for invalid user admin from 203.0.113.45 port 63157 ssh2
+2026-10-15T03:18:58.570739+03:00 bastion-01 sshd[2661]: Failed password for root from 203.0.113.45 port 31169 ssh2
+2026-10-15T03:19:00.812625+03:00 bastion-01 sshd[2669]: Failed password for invalid user admin from 203.0.113.45 port 13583 ssh2
+2026-10-15T03:19:02.423998+03:00 bastion-01 sshd[2670]: Failed password for root from 203.0.113.45 port 51890 ssh2
+2026-10-15T03:19:04.736028+03:00 bastion-01 sshd[2671]: Failed password for root from 203.0.113.45 port 3759 ssh2
+2026-10-15T03:19:04.482036+03:00 bastion-01 sshd[2675]: Connection closed by authenticating user root 203.0.113.45 port 39972 [preauth]
+2026-10-15T03:19:07.952668+03:00 bastion-01 sshd[2682]: Failed password for root from 203.0.113.45 port 9910 ssh2
+2026-10-15T03:19:09.590305+03:00 bastion-01 sshd[2686]: Failed password for root from 203.0.113.45 port 58179 ssh2
+2026-10-15T04:17:01.611097+03:00 bastion-01 CRON[1025]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T05:17:01.953893+03:00 bastion-01 CRON[1026]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T06:17:01.225127+03:00 bastion-01 CRON[1035]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T07:17:01.090122+03:00 bastion-01 CRON[1036]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T08:17:01.438485+03:00 bastion-01 CRON[1043]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T08:30:35.052838+03:00 bastion-01 sshd[1535]: Accepted publickey for erin from 192.168.10.22 port 65266 ssh2: ED25519 SHA256:pdcwhp98geq6it112kkjjjpgik6gcjisxdqba5iqn5i
+2026-10-15T08:30:35.198781+03:00 bastion-01 sshd[1535]: pam_unix(sshd:session): session opened for user erin(uid=1005) by (uid=0)
+2026-10-15T08:30:35.975357+03:00 bastion-01 systemd-logind[1539]: New session 714 of user erin.
+2026-10-15T08:36:31.110918+03:00 bastion-01 sudo:     erin : TTY=pts/0 ; PWD=/home/erin ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+2026-10-15T08:47:55.243874+03:00 bastion-01 sshd[1480]: Accepted publickey for carol from 10.0.1.31 port 49903 ssh2: ED25519 SHA256:snmcj8esw5hjioq845abz6rvao7349idfsy7zx1qtb2
+2026-10-15T08:47:55.597040+03:00 bastion-01 sshd[1480]: pam_unix(sshd:session): session opened for user carol(uid=1003) by (uid=0)
+2026-10-15T08:47:55.134182+03:00 bastion-01 systemd-logind[1485]: New session 138 of user carol.
+2026-10-15T09:17:01.252353+03:00 bastion-01 CRON[1045]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T10:17:01.577814+03:00 bastion-01 CRON[1047]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T10:34:58.572424+03:00 bastion-01 sshd[1433]: Accepted publickey for bob from 10.0.1.77 port 46926 ssh2: ED25519 SHA256:lk2g6jadjvijea9p6wbz78jg7wthqyj29bas9siqxxx
+2026-10-15T10:34:58.875156+03:00 bastion-01 sshd[1433]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)
+2026-10-15T10:34:58.322733+03:00 bastion-01 systemd-logind[1442]: New session 502 of user bob.
+2026-10-15T10:40:59.594669+03:00 bastion-01 sshd[1577]: Accepted publickey for frank from 10.0.1.45 port 59705 ssh2: ED25519 SHA256:n2j1b48qsy6jt40nnnflciw8ksl857600hkwpnbrwbb
+2026-10-15T10:40:59.372205+03:00 bastion-01 sshd[1577]: pam_unix(sshd:session): session opened for user frank(uid=1006) by (uid=0)
+2026-10-15T10:40:59.548498+03:00 bastion-01 systemd-logind[1579]: New session 411 of user frank.
+2026-10-15T10:46:31.214102+03:00 bastion-01 sudo:     frank : TTY=pts/1 ; PWD=/home/frank ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+2026-10-15T11:17:01.061981+03:00 bastion-01 CRON[1054]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T11:21:12.936169+03:00 bastion-01 sshd[1445]: Accepted publickey for bob from 10.0.1.77 port 27546 ssh2: ED25519 SHA256:994aw5pbxns8vybgjanl9lb5hgmdkxi1d3fvokwd84f
+2026-10-15T11:21:12.750773+03:00 bastion-01 sshd[1445]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)
+2026-10-15T11:21:12.801438+03:00 bastion-01 systemd-logind[1452]: New session 902 of user bob.
+2026-10-15T11:23:50.045915+03:00 bastion-01 sudo:     bob : TTY=pts/1 ; PWD=/home/bob ; USER=root ; COMMAND=/usr/bin/less /etc/nginx/nginx.conf
+2026-10-15T11:30:44.140659+03:00 bastion-01 sshd[2954]: Accepted publickey for erin from 198.51.100.77 port 2710 ssh2: ED25519 SHA256:7u9cw0ldff1d3ptvtxvl0jz11l19qks7earx1n9i1db
+2026-10-15T11:30:44.128159+03:00 bastion-01 sshd[2954]: pam_unix(sshd:session): session opened for user erin(uid=1005) by (uid=0)
+2026-10-15T11:30:44.526228+03:00 bastion-01 systemd-logind[2963]: New session 161 of user erin.
+2026-10-15T11:31:16.769499+03:00 bastion-01 sudo:     bob : TTY=pts/3 ; PWD=/home/bob ; USER=root ; COMMAND=/usr/bin/less /etc/nginx/nginx.conf
+2026-10-15T11:34:02.582219+03:00 bastion-01 sudo:     erin : TTY=pts/1 ; PWD=/home/erin ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+2026-10-15T12:17:01.993473+03:00 bastion-01 CRON[1056]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T12:52:51.862721+03:00 bastion-01 sshd[1529]: Accepted publickey for dave from 192.168.10.14 port 47243 ssh2: ED25519 SHA256:rn7gn6bo31bbc7j06mj8wjzlja16w7air88njpr7g20
+2026-10-15T12:52:51.725729+03:00 bastion-01 sshd[1529]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-15T12:52:51.636752+03:00 bastion-01 systemd-logind[1532]: New session 891 of user dave.
+2026-10-15T12:54:03.448185+03:00 bastion-01 sshd[1469]: Accepted publickey for carol from 10.0.1.31 port 55725 ssh2: ED25519 SHA256:xwf8pl12pb1o5thc7owe5r6tgokj0xoiryexcs3tql1
+2026-10-15T12:54:03.146377+03:00 bastion-01 sshd[1469]: pam_unix(sshd:session): session opened for user carol(uid=1003) by (uid=0)
+2026-10-15T12:54:03.255942+03:00 bastion-01 systemd-logind[1473]: New session 660 of user carol.
+2026-10-15T12:56:01.427563+03:00 bastion-01 sudo:     dave : TTY=pts/1 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+2026-10-15T12:57:53.930350+03:00 bastion-01 sudo:     carol : TTY=pts/1 ; PWD=/home/carol ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-15T12:58:55.536750+03:00 bastion-01 sudo:     dave : TTY=pts/0 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-15T13:01:09.386196+03:00 bastion-01 sudo:     carol : TTY=pts/1 ; PWD=/home/carol ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+2026-10-15T13:17:01.661259+03:00 bastion-01 CRON[1060]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T13:39:53.781385+03:00 bastion-01 sshd[1582]: Accepted publickey for frank from 10.0.1.45 port 1948 ssh2: ED25519 SHA256:7ifdw52ojaxumxp70i6btoic2at7fhvsx3glkb62za4
+2026-10-15T13:39:53.956573+03:00 bastion-01 sshd[1582]: pam_unix(sshd:session): session opened for user frank(uid=1006) by (uid=0)
+2026-10-15T13:39:53.777786+03:00 bastion-01 systemd-logind[1584]: New session 576 of user frank.
+2026-10-15T14:05:36.657501+03:00 bastion-01 sshd[1547]: Accepted publickey for frank from 10.0.1.45 port 49340 ssh2: ED25519 SHA256:sfks7dr28he79rb7n6w3f2ho43ghosnei06bu1b4evt
+2026-10-15T14:05:36.815882+03:00 bastion-01 sshd[1547]: pam_unix(sshd:session): session opened for user frank(uid=1006) by (uid=0)
+2026-10-15T14:05:36.323183+03:00 bastion-01 systemd-logind[1554]: New session 413 of user frank.
+2026-10-15T14:13:52.012649+03:00 bastion-01 sshd[1369]: Failed password for alice from 10.0.1.20 port 16225 ssh2
+2026-10-15T14:14:09.617740+03:00 bastion-01 sshd[1377]: Accepted password for alice from 10.0.1.20 port 55490 ssh2
+2026-10-15T14:14:09.191200+03:00 bastion-01 sshd[1377]: pam_unix(sshd:session): session opened for user alice(uid=1001) by (uid=0)
+2026-10-15T14:14:09.004292+03:00 bastion-01 systemd-logind[1382]: New session 369 of user alice.
+2026-10-15T14:17:01.605136+03:00 bastion-01 CRON[1061]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T14:21:51.724035+03:00 bastion-01 sudo:     alice : TTY=pts/1 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+2026-10-15T14:24:36.478825+03:00 bastion-01 sudo:     alice : TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-15T14:24:42.643334+03:00 bastion-01 sshd[1563]: Accepted publickey for frank from 10.0.1.45 port 29751 ssh2: ED25519 SHA256:ga9qqw343ocmn2sxbe7lzc16x2acwyde5k32yzh3vjl
+2026-10-15T14:24:42.288350+03:00 bastion-01 sshd[1563]: pam_unix(sshd:session): session opened for user frank(uid=1006) by (uid=0)
+2026-10-15T14:24:42.150546+03:00 bastion-01 systemd-logind[1571]: New session 935 of user frank.
+2026-10-15T14:27:59.334577+03:00 bastion-01 sudo:     frank : TTY=pts/1 ; PWD=/home/frank ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+2026-10-15T14:29:47.423064+03:00 bastion-01 sudo:     frank : TTY=pts/1 ; PWD=/home/frank ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+2026-10-15T14:44:36.989373+03:00 bastion-01 sshd[1494]: Failed password for dave from 192.168.10.14 port 20707 ssh2
+2026-10-15T14:44:48.273554+03:00 bastion-01 sshd[1498]: Accepted password for dave from 192.168.10.14 port 26457 ssh2
+2026-10-15T14:44:48.234443+03:00 bastion-01 sshd[1498]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-15T14:44:48.010969+03:00 bastion-01 systemd-logind[1499]: New session 909 of user dave.
+2026-10-15T15:17:01.051998+03:00 bastion-01 CRON[1068]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T15:17:20.193047+03:00 bastion-01 sshd[1503]: Accepted publickey for dave from 192.168.10.14 port 32173 ssh2: ED25519 SHA256:stboxbg5xcipnrzznoak4crh1gqj6dwv6r6cv7bavoz
+2026-10-15T15:17:20.412427+03:00 bastion-01 sshd[1503]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-15T15:17:20.768316+03:00 bastion-01 systemd-logind[1509]: New session 560 of user dave.
+2026-10-15T15:28:34.194523+03:00 bastion-01 sudo:     dave : TTY=pts/1 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+2026-10-15T15:32:34.118331+03:00 bastion-01 sshd[1421]: Accepted publickey for bob from 10.0.1.77 port 62726 ssh2: ED25519 SHA256:is5776hqoolyphke17xnjeq0d5fyiz9opmdnmqznsk8
+2026-10-15T15:32:34.963167+03:00 bastion-01 sshd[1421]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)
+2026-10-15T15:32:34.918963+03:00 bastion-01 systemd-logind[1425]: New session 907 of user bob.
+2026-10-15T15:34:59.425667+03:00 bastion-01 sudo:     bob : TTY=pts/2 ; PWD=/home/bob ; USER=root ; COMMAND=/usr/bin/tail -n 100 /var/log/syslog
+2026-10-15T15:36:33.792489+03:00 bastion-01 sudo:     bob : TTY=pts/2 ; PWD=/home/bob ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+2026-10-15T16:08:58.779319+03:00 bastion-01 sshd[1461]: Accepted publickey for carol from 10.0.1.31 port 38279 ssh2: ED25519 SHA256:423v6yyibemd4uwwyra20stxc0jcj0h09rnry1wxcfj
+2026-10-15T16:08:58.726544+03:00 bastion-01 sshd[1461]: pam_unix(sshd:session): session opened for user carol(uid=1003) by (uid=0)
+2026-10-15T16:08:58.013074+03:00 bastion-01 systemd-logind[1464]: New session 411 of user carol.
+2026-10-15T16:12:21.743305+03:00 bastion-01 sudo:     carol : TTY=pts/2 ; PWD=/home/carol ; USER=root ; COMMAND=/usr/bin/tail -n 100 /var/log/syslog
+2026-10-15T16:12:55.725808+03:00 bastion-01 sudo:     carol : TTY=pts/0 ; PWD=/home/carol ; USER=root ; COMMAND=/usr/bin/less /etc/nginx/nginx.conf
+2026-10-15T16:17:01.048845+03:00 bastion-01 CRON[1072]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T16:18:29.409113+03:00 bastion-01 sshd[1466]: Accepted publickey for carol from 10.0.1.31 port 59591 ssh2: ED25519 SHA256:tldrkcs99n67cd0jmvwkenr5of8yo0onellmo7ha0jc
+2026-10-15T16:18:29.912231+03:00 bastion-01 sshd[1466]: pam_unix(sshd:session): session opened for user carol(uid=1003) by (uid=0)
+2026-10-15T16:18:29.378231+03:00 bastion-01 systemd-logind[1468]: New session 703 of user carol.
+2026-10-15T16:25:25.558463+03:00 bastion-01 sshd[1384]: Accepted publickey for alice from 10.0.1.20 port 32581 ssh2: ED25519 SHA256:wcchfmbafdna5wfjmne49qrddmj3fa8tftat95zjng1
+2026-10-15T16:25:25.567874+03:00 bastion-01 sshd[1384]: pam_unix(sshd:session): session opened for user alice(uid=1001) by (uid=0)
+2026-10-15T16:25:25.345678+03:00 bastion-01 systemd-logind[1393]: New session 897 of user alice.
+2026-10-15T16:46:57.347810+03:00 bastion-01 sshd[1515]: Failed password for dave from 192.168.10.14 port 56017 ssh2
+2026-10-15T16:47:29.114250+03:00 bastion-01 sshd[1523]: Accepted password for dave from 192.168.10.14 port 12116 ssh2
+2026-10-15T16:47:29.003010+03:00 bastion-01 sshd[1523]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-15T16:47:29.084686+03:00 bastion-01 systemd-logind[1528]: New session 180 of user dave.
+2026-10-15T16:54:39.373952+03:00 bastion-01 sudo:     dave : TTY=pts/3 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+2026-10-15T17:17:01.900169+03:00 bastion-01 CRON[1081]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T17:45:39.810606+03:00 bastion-01 sshd[1540]: Accepted publickey for erin from 192.168.10.22 port 25187 ssh2: ED25519 SHA256:mb9b0633onwcbrro2xftxoj9ypb05oa12xoo7pfedun
+2026-10-15T17:45:39.170440+03:00 bastion-01 sshd[1540]: pam_unix(sshd:session): session opened for user erin(uid=1005) by (uid=0)
+2026-10-15T17:45:39.054206+03:00 bastion-01 systemd-logind[1541]: New session 233 of user erin.
+2026-10-15T17:51:50.028887+03:00 bastion-01 sshd[1397]: Accepted publickey for alice from 10.0.1.20 port 53851 ssh2: ED25519 SHA256:io2hr092rgvm30m9cdqmr9va6mx4enzh6pwd8zq0df9
+2026-10-15T17:51:50.158492+03:00 bastion-01 sshd[1397]: pam_unix(sshd:session): session opened for user alice(uid=1001) by (uid=0)
+2026-10-15T17:51:50.845678+03:00 bastion-01 systemd-logind[1405]: New session 704 of user alice.
+2026-10-15T17:52:38.260565+03:00 bastion-01 sshd[1411]: Accepted publickey for alice from 10.0.1.20 port 11241 ssh2: ED25519 SHA256:tea8xs7p53hjkivjpe6mqv6p7stsapga2gr0ulst2du
+2026-10-15T17:52:38.200599+03:00 bastion-01 sshd[1411]: pam_unix(sshd:session): session opened for user alice(uid=1001) by (uid=0)
+2026-10-15T17:52:38.809774+03:00 bastion-01 systemd-logind[1412]: New session 383 of user alice.
+2026-10-15T17:59:48.341430+03:00 bastion-01 sudo:     alice : TTY=pts/3 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/apt update
+2026-10-15T18:00:22.726381+03:00 bastion-01 sudo:     alice : TTY=pts/1 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-15T18:17:01.303677+03:00 bastion-01 CRON[1084]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T19:17:01.151262+03:00 bastion-01 CRON[1091]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T20:17:01.123514+03:00 bastion-01 CRON[1100]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T21:17:01.587472+03:00 bastion-01 CRON[1105]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T22:17:01.108061+03:00 bastion-01 CRON[1108]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-15T23:17:01.390487+03:00 bastion-01 CRON[1112]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T00:17:01.574351+03:00 bastion-01 CRON[1114]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T01:17:01.591783+03:00 bastion-01 CRON[1116]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T02:17:01.649078+03:00 bastion-01 CRON[1117]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T03:17:01.520528+03:00 bastion-01 CRON[1121]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T04:17:01.448363+03:00 bastion-01 CRON[1130]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T05:17:01.488218+03:00 bastion-01 CRON[1136]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T06:17:01.379146+03:00 bastion-01 CRON[1144]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T07:17:01.260494+03:00 bastion-01 CRON[1149]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T08:00:52.772575+03:00 bastion-01 sshd[1590]: Failed password for alice from 10.0.1.20 port 46703 ssh2
+2026-10-16T08:01:02.898103+03:00 bastion-01 sshd[1591]: Accepted password for alice from 10.0.1.20 port 5333 ssh2
+2026-10-16T08:01:02.619155+03:00 bastion-01 sshd[1591]: pam_unix(sshd:session): session opened for user alice(uid=1001) by (uid=0)
+2026-10-16T08:01:02.208993+03:00 bastion-01 systemd-logind[1597]: New session 880 of user alice.
+2026-10-16T08:16:13.270431+03:00 bastion-01 sshd[1738]: Failed password for dave from 192.168.10.14 port 55891 ssh2
+2026-10-16T08:16:22.775496+03:00 bastion-01 sshd[1747]: Accepted password for dave from 192.168.10.14 port 47528 ssh2
+2026-10-16T08:16:22.678100+03:00 bastion-01 sshd[1747]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-16T08:16:22.058476+03:00 bastion-01 systemd-logind[1755]: New session 879 of user dave.
+2026-10-16T08:17:01.732948+03:00 bastion-01 CRON[1152]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T08:23:52.493591+03:00 bastion-01 sudo:     dave : TTY=pts/0 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/less /etc/nginx/nginx.conf
+2026-10-16T08:25:40.618435+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+2026-10-16T08:28:51.736370+03:00 bastion-01 sshd[1778]: Accepted publickey for erin from 192.168.10.22 port 10208 ssh2: ED25519 SHA256:p27kmbojg4sigv3601geywglays46smkx8do1exiu9b
+2026-10-16T08:28:51.389195+03:00 bastion-01 sshd[1778]: pam_unix(sshd:session): session opened for user erin(uid=1005) by (uid=0)
+2026-10-16T08:28:51.373457+03:00 bastion-01 systemd-logind[1779]: New session 688 of user erin.
+2026-10-16T08:30:29.531024+03:00 bastion-01 sshd[1674]: Accepted publickey for carol from 10.0.1.31 port 17182 ssh2: ED25519 SHA256:rt5a4qux4np8cwwbvy7l9sr6bzwm5nrs1hppt3k3osj
+2026-10-16T08:30:29.361559+03:00 bastion-01 sshd[1674]: pam_unix(sshd:session): session opened for user carol(uid=1003) by (uid=0)
+2026-10-16T08:30:29.830420+03:00 bastion-01 systemd-logind[1682]: New session 308 of user carol.
+2026-10-16T08:34:58.614938+03:00 bastion-01 sudo:     carol : TTY=pts/1 ; PWD=/home/carol ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+2026-10-16T08:40:50.371978+03:00 bastion-01 sshd[1652]: Accepted publickey for carol from 10.0.1.31 port 23493 ssh2: ED25519 SHA256:o8hyo1e9mcjoappzmji07sh2ohe13wqui8mw33qkte4
+2026-10-16T08:40:50.821657+03:00 bastion-01 sshd[1652]: pam_unix(sshd:session): session opened for user carol(uid=1003) by (uid=0)
+2026-10-16T08:40:50.280414+03:00 bastion-01 systemd-logind[1656]: New session 971 of user carol.
+2026-10-16T09:17:01.085831+03:00 bastion-01 CRON[1156]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T09:50:02.729507+03:00 bastion-01 sshd[1691]: Accepted publickey for carol from 10.0.1.31 port 59062 ssh2: ED25519 SHA256:ouodb3r1cstnfyy5cbwwgx5pd7a5elz5gbauu6rs31p
+2026-10-16T09:50:02.963253+03:00 bastion-01 sshd[1691]: pam_unix(sshd:session): session opened for user carol(uid=1003) by (uid=0)
+2026-10-16T09:50:02.070484+03:00 bastion-01 systemd-logind[1699]: New session 514 of user carol.
+2026-10-16T09:56:55.100337+03:00 bastion-01 sshd[1604]: Accepted publickey for bob from 10.0.1.77 port 8043 ssh2: ED25519 SHA256:ihb861d1wre2xkmjm7b161vrk02bsdqbuz3ukpsk1bm
+2026-10-16T09:56:55.515358+03:00 bastion-01 sshd[1604]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)
+2026-10-16T09:56:55.518606+03:00 bastion-01 systemd-logind[1607]: New session 811 of user bob.
+2026-10-16T09:57:33.498543+03:00 bastion-01 sudo:     carol : TTY=pts/1 ; PWD=/home/carol ; USER=root ; COMMAND=/usr/bin/less /etc/nginx/nginx.conf
+2026-10-16T09:59:30.086952+03:00 bastion-01 sudo:     carol : TTY=pts/0 ; PWD=/home/carol ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-16T10:00:53.349993+03:00 bastion-01 sshd[2822]: Failed password for invalid user user from 198.51.100.23 port 38979 ssh2
+2026-10-16T10:05:07.914759+03:00 bastion-01 sshd[2851]: Failed password for invalid user ftp from 198.51.100.23 port 37765 ssh2
+2026-10-16T10:09:31.596598+03:00 bastion-01 sshd[2846]: Failed password for invalid user guest from 198.51.100.23 port 18198 ssh2
+2026-10-16T10:17:01.550708+03:00 bastion-01 CRON[1161]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T10:21:38.564588+03:00 bastion-01 sshd[2756]: Failed password for invalid user ubuntu from 198.51.100.23 port 58394 ssh2
+2026-10-16T10:25:27.347465+03:00 bastion-01 sshd[2808]: Failed password for invalid user git from 198.51.100.23 port 24681 ssh2
+2026-10-16T10:29:53.380539+03:00 bastion-01 sshd[2853]: Failed password for invalid user ftp from 198.51.100.23 port 28958 ssh2
+2026-10-16T10:33:59.918844+03:00 bastion-01 sshd[2830]: Failed password for invalid user user from 198.51.100.23 port 17325 ssh2
+2026-10-16T10:34:22.079569+03:00 bastion-01 sshd[2795]: Failed password for invalid user deploy from 198.51.100.23 port 63802 ssh2
+2026-10-16T10:38:20.538109+03:00 bastion-01 sshd[2705]: Failed password for invalid user test from 198.51.100.23 port 16706 ssh2
+2026-10-16T10:53:09.022317+03:00 bastion-01 sshd[2731]: Failed password for invalid user oracle from 198.51.100.23 port 46501 ssh2
+2026-10-16T10:53:21.035805+03:00 bastion-01 sshd[2719]: Failed password for invalid user oracle from 198.51.100.23 port 22478 ssh2
+2026-10-16T10:54:08.326376+03:00 bastion-01 sshd[2799]: Failed password for invalid user git from 198.51.100.23 port 35644 ssh2
+2026-10-16T10:55:02.843170+03:00 bastion-01 sshd[2698]: Failed password for invalid user admin from 198.51.100.23 port 56170 ssh2
+2026-10-16T11:06:16.028209+03:00 bastion-01 sshd[1585]: Accepted publickey for alice from 10.0.1.20 port 9102 ssh2: ED25519 SHA256:m0z4zjtp2sjx8h5aji080l5li6wyx9q4z4p0ulhwc6f
+2026-10-16T11:06:16.117328+03:00 bastion-01 sshd[1585]: pam_unix(sshd:session): session opened for user alice(uid=1001) by (uid=0)
+2026-10-16T11:06:16.361615+03:00 bastion-01 systemd-logind[1588]: New session 209 of user alice.
+2026-10-16T11:06:36.158265+03:00 bastion-01 sshd[2767]: Failed password for invalid user pi from 198.51.100.23 port 2646 ssh2
+2026-10-16T11:11:21.412526+03:00 bastion-01 sshd[2786]: Failed password for invalid user deploy from 198.51.100.23 port 11397 ssh2
+2026-10-16T11:13:04.839337+03:00 bastion-01 sshd[2768]: Failed password for invalid user pi from 198.51.100.23 port 32741 ssh2
+2026-10-16T11:13:20.104485+03:00 bastion-01 sshd[2717]: Failed password for invalid user test from 198.51.100.23 port 54537 ssh2
+2026-10-16T11:17:01.917648+03:00 bastion-01 CRON[1169]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T11:20:12.660198+03:00 bastion-01 sshd[1617]: Accepted publickey for bob from 10.0.1.77 port 11811 ssh2: ED25519 SHA256:8dn920phwdhnbo2yswqfvo06pu0piz51z4yxqlwdp2z
+2026-10-16T11:20:12.164058+03:00 bastion-01 sshd[1617]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)
+2026-10-16T11:20:12.506193+03:00 bastion-01 systemd-logind[1624]: New session 356 of user bob.
+2026-10-16T11:26:01.732544+03:00 bastion-01 sshd[2849]: Failed password for invalid user ftp from 198.51.100.23 port 39324 ssh2
+2026-10-16T11:26:33.329630+03:00 bastion-01 sshd[2814]: Failed password for invalid user user from 198.51.100.23 port 26444 ssh2
+2026-10-16T11:26:54.937945+03:00 bastion-01 sudo:     bob : TTY=pts/1 ; PWD=/home/bob ; USER=root ; COMMAND=/usr/bin/less /etc/nginx/nginx.conf
+2026-10-16T11:28:23.872280+03:00 bastion-01 sudo:     bob : TTY=pts/3 ; PWD=/home/bob ; USER=root ; COMMAND=/usr/bin/apt update
+2026-10-16T11:40:38.286615+03:00 bastion-01 sshd[2840]: Failed password for invalid user guest from 198.51.100.23 port 18893 ssh2
+2026-10-16T11:50:35.756840+03:00 bastion-01 sshd[2711]: Failed password for invalid user test from 198.51.100.23 port 63154 ssh2
+2026-10-16T11:51:02.250268+03:00 bastion-01 sshd[1767]: Accepted publickey for erin from 192.168.10.22 port 6121 ssh2: ED25519 SHA256:755fqd74wqm3rwfhcztf5jofj4mgrl6e9c6yhrkjhn9
+2026-10-16T11:51:02.970016+03:00 bastion-01 sshd[1767]: pam_unix(sshd:session): session opened for user erin(uid=1005) by (uid=0)
+2026-10-16T11:51:02.409096+03:00 bastion-01 systemd-logind[1769]: New session 343 of user erin.
+2026-10-16T11:52:39.151363+03:00 bastion-01 sudo:     erin : TTY=pts/2 ; PWD=/home/erin ; USER=root ; COMMAND=/usr/bin/less /etc/nginx/nginx.conf
+2026-10-16T11:54:32.865736+03:00 bastion-01 sshd[2699]: Failed password for invalid user admin from 198.51.100.23 port 45622 ssh2
+2026-10-16T11:58:40.077337+03:00 bastion-01 sshd[2741]: Failed password for invalid user postgres from 198.51.100.23 port 33008 ssh2
+2026-10-16T11:58:47.915211+03:00 bastion-01 sshd[2857]: Failed password for invalid user www-data from 198.51.100.23 port 52996 ssh2
+2026-10-16T11:59:30.318762+03:00 bastion-01 sshd[2859]: Failed password for invalid user www-data from 198.51.100.23 port 10273 ssh2
+2026-10-16T12:00:06.581169+03:00 bastion-01 sshd[2744]: Failed password for invalid user postgres from 198.51.100.23 port 13165 ssh2
+2026-10-16T12:02:44.883906+03:00 bastion-01 sshd[2778]: Failed password for invalid user deploy from 198.51.100.23 port 45556 ssh2
+2026-10-16T12:05:34.650558+03:00 bastion-01 sshd[2771]: Failed password for invalid user pi from 198.51.100.23 port 5913 ssh2
+2026-10-16T12:05:43.119093+03:00 bastion-01 sshd[2739]: Failed password for invalid user postgres from 198.51.100.23 port 39124 ssh2
+2026-10-16T12:14:05.221648+03:00 bastion-01 sshd[2800]: Failed password for invalid user git from 198.51.100.23 port 39639 ssh2
+2026-10-16T12:17:01.764878+03:00 bastion-01 CRON[1175]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T12:17:37.176166+03:00 bastion-01 sshd[2692]: Failed password for invalid user admin from 198.51.100.23 port 58091 ssh2
+2026-10-16T12:18:48.266969+03:00 bastion-01 sshd[2723]: Failed password for invalid user oracle from 198.51.100.23 port 45275 ssh2
+2026-10-16T12:19:39.876826+03:00 bastion-01 sshd[2751]: Failed password for invalid user ubuntu from 198.51.100.23 port 58285 ssh2
+2026-10-16T12:23:36.671752+03:00 bastion-01 sshd[1728]: Accepted publickey for dave from 192.168.10.14 port 52118 ssh2: ED25519 SHA256:sfb9ndw2fvmsab95ruj2p8138jbhgdbu5q86cvoe8ju
+2026-10-16T12:23:36.094144+03:00 bastion-01 sshd[1728]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-16T12:23:36.412214+03:00 bastion-01 systemd-logind[1737]: New session 785 of user dave.
+2026-10-16T12:24:26.533627+03:00 bastion-01 sshd[2865]: Failed password for invalid user www-data from 198.51.100.23 port 23404 ssh2
+2026-10-16T12:27:43.459890+03:00 bastion-01 sshd[1657]: Accepted publickey for carol from 10.0.1.31 port 53809 ssh2: ED25519 SHA256:zkikrpwxn74c362f3waa8xjdfi1mf62g6v2y624hyt0
+2026-10-16T12:27:43.703834+03:00 bastion-01 sshd[1657]: pam_unix(sshd:session): session opened for user carol(uid=1003) by (uid=0)
+2026-10-16T12:27:43.124175+03:00 bastion-01 systemd-logind[1666]: New session 219 of user carol.
+2026-10-16T12:27:57.762276+03:00 bastion-01 sshd[2833]: Failed password for invalid user guest from 198.51.100.23 port 3998 ssh2
+2026-10-16T12:28:40.180485+03:00 bastion-01 sudo:     dave : TTY=pts/1 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+2026-10-16T12:29:35.994853+03:00 bastion-01 sshd[2761]: Failed password for invalid user ubuntu from 198.51.100.23 port 50925 ssh2
+2026-10-16T12:37:48.584269+03:00 bastion-01 sudo:     carol : TTY=pts/3 ; PWD=/home/carol ; USER=root ; COMMAND=/usr/bin/tail -n 100 /var/log/syslog
+2026-10-16T13:15:46.462825+03:00 bastion-01 sshd[1758]: Failed password for erin from 192.168.10.22 port 25904 ssh2
+2026-10-16T13:16:24.150102+03:00 bastion-01 sshd[1762]: Accepted password for erin from 192.168.10.22 port 53947 ssh2
+2026-10-16T13:16:24.958711+03:00 bastion-01 sshd[1762]: pam_unix(sshd:session): session opened for user erin(uid=1005) by (uid=0)
+2026-10-16T13:16:24.490626+03:00 bastion-01 systemd-logind[1763]: New session 793 of user erin.
+2026-10-16T13:17:01.301924+03:00 bastion-01 CRON[1183]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T14:02:10.367452+03:00 bastion-01 sshd[2869]: Failed password for bob from 10.0.1.77 port 56939 ssh2
+2026-10-16T14:03:41.350672+03:00 bastion-01 sshd[2876]: Failed password for bob from 10.0.1.77 port 47927 ssh2
+2026-10-16T14:04:43.926587+03:00 bastion-01 sshd[2882]: Failed password for bob from 10.0.1.77 port 23123 ssh2
+2026-10-16T14:06:19.385126+03:00 bastion-01 sshd[2891]: Failed password for bob from 10.0.1.77 port 32577 ssh2
+2026-10-16T14:07:51.366200+03:00 bastion-01 sshd[2895]: Failed password for bob from 10.0.1.77 port 54056 ssh2
+2026-10-16T14:08:56.931938+03:00 bastion-01 sshd[2896]: Failed password for bob from 10.0.1.77 port 14482 ssh2
+2026-10-16T14:10:12.467159+03:00 bastion-01 sshd[2904]: Accepted password for bob from 10.0.1.77 port 27564 ssh2
+2026-10-16T14:10:12.415313+03:00 bastion-01 sshd[2904]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)
+2026-10-16T14:10:12.974630+03:00 bastion-01 systemd-logind[2909]: New session 682 of user bob.
+2026-10-16T14:17:01.123800+03:00 bastion-01 CRON[1185]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T14:44:26.454758+03:00 bastion-01 sshd[1795]: Accepted publickey for frank from 10.0.1.45 port 3396 ssh2: ED25519 SHA256:o71mimp92634bs87ipwntcpsaf817w355bxjyjt7wjs
+2026-10-16T14:44:26.248147+03:00 bastion-01 sshd[1795]: pam_unix(sshd:session): session opened for user frank(uid=1006) by (uid=0)
+2026-10-16T14:44:26.118535+03:00 bastion-01 systemd-logind[1800]: New session 140 of user frank.
+2026-10-16T14:46:45.088577+03:00 bastion-01 sudo:     frank : TTY=pts/2 ; PWD=/home/frank ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-16T15:02:33.815132+03:00 bastion-01 sudo:     carol : 3 incorrect password attempts ; TTY=pts/1 ; PWD=/home/carol ; USER=root ; COMMAND=/bin/bash
+2026-10-16T15:13:57.676214+03:00 bastion-01 sshd[1700]: Accepted publickey for dave from 192.168.10.14 port 29007 ssh2: ED25519 SHA256:aye8d5eazi0gb1z40dwzq7j8zaax3cl0f4rcnupyf2n
+2026-10-16T15:13:57.171993+03:00 bastion-01 sshd[1700]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-16T15:13:57.500131+03:00 bastion-01 systemd-logind[1707]: New session 744 of user dave.
+2026-10-16T15:17:01.438433+03:00 bastion-01 CRON[1194]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T15:18:01.911797+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-16T15:25:20.306591+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-16T15:37:34.710577+03:00 bastion-01 sshd[1808]: Accepted publickey for frank from 10.0.1.45 port 9145 ssh2: ED25519 SHA256:s56uj00kqzhntn6kr3bmgt8o7f8llj5hcatvmxs4m1s
+2026-10-16T15:37:34.774517+03:00 bastion-01 sshd[1808]: pam_unix(sshd:session): session opened for user frank(uid=1006) by (uid=0)
+2026-10-16T15:37:34.353386+03:00 bastion-01 systemd-logind[1815]: New session 258 of user frank.
+2026-10-16T15:57:45.544441+03:00 bastion-01 sshd[1628]: Failed password for bob from 10.0.1.77 port 11564 ssh2
+2026-10-16T15:58:06.888311+03:00 bastion-01 sshd[1634]: Accepted password for bob from 10.0.1.77 port 7648 ssh2
+2026-10-16T15:58:06.602470+03:00 bastion-01 sshd[1634]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)
+2026-10-16T15:58:06.214939+03:00 bastion-01 systemd-logind[1643]: New session 567 of user bob.
+2026-10-16T16:04:07.484499+03:00 bastion-01 sshd[1783]: Accepted publickey for frank from 10.0.1.45 port 54536 ssh2: ED25519 SHA256:3625u6kd0qa2eidwglt8a70j4wqipmdgjqv1de5tiiy
+2026-10-16T16:04:07.782844+03:00 bastion-01 sshd[1783]: pam_unix(sshd:session): session opened for user frank(uid=1006) by (uid=0)
+2026-10-16T16:04:07.994253+03:00 bastion-01 systemd-logind[1786]: New session 506 of user frank.
+2026-10-16T16:16:36.200879+03:00 bastion-01 sshd[1612]: Accepted publickey for bob from 10.0.1.77 port 54451 ssh2: ED25519 SHA256:hzrdwc2z2wmoo6d5ahj6sn5iqt11xmlf4x0gp1ueq5i
+2026-10-16T16:16:36.280476+03:00 bastion-01 sshd[1612]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)
+2026-10-16T16:16:36.758472+03:00 bastion-01 systemd-logind[1615]: New session 408 of user bob.
+2026-10-16T16:17:01.793919+03:00 bastion-01 CRON[1197]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T16:25:33.168741+03:00 bastion-01 sudo:     bob : TTY=pts/2 ; PWD=/home/bob ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-16T17:17:01.159367+03:00 bastion-01 CRON[1203]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T17:46:00.244178+03:00 bastion-01 sshd[1712]: Accepted publickey for dave from 192.168.10.14 port 39340 ssh2: ED25519 SHA256:p5nyv63kajpv35b335uj43y6mdt2h17ivyqhj12qd31
+2026-10-16T17:46:00.417528+03:00 bastion-01 sshd[1712]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-16T17:46:00.940498+03:00 bastion-01 systemd-logind[1721]: New session 693 of user dave.
+2026-10-16T17:49:20.845010+03:00 bastion-01 sudo:     dave : TTY=pts/1 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/apt update
+2026-10-16T17:52:14.198339+03:00 bastion-01 sudo:     dave : TTY=pts/1 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/docker ps
+2026-10-16T18:17:01.442182+03:00 bastion-01 CRON[1211]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T19:17:01.700675+03:00 bastion-01 CRON[1212]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T20:17:01.801710+03:00 bastion-01 CRON[1214]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T21:17:01.600861+03:00 bastion-01 CRON[1223]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T22:17:01.356644+03:00 bastion-01 CRON[1229]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-16T23:17:01.623241+03:00 bastion-01 CRON[1235]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T00:17:01.608064+03:00 bastion-01 CRON[1243]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T01:17:01.072103+03:00 bastion-01 CRON[1251]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T02:11:04.150800+03:00 bastion-01 sshd[2911]: Failed password for dave from 203.0.113.9 port 12094 ssh2
+2026-10-17T02:12:40.264364+03:00 bastion-01 sshd[2916]: Failed password for dave from 203.0.113.9 port 20782 ssh2
+2026-10-17T02:14:12.690864+03:00 bastion-01 sshd[2925]: Failed password for dave from 203.0.113.9 port 48646 ssh2
+2026-10-17T02:15:55.077070+03:00 bastion-01 sshd[2931]: Failed password for dave from 203.0.113.9 port 62459 ssh2
+2026-10-17T02:17:01.990569+03:00 bastion-01 CRON[1253]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T02:17:21.969700+03:00 bastion-01 sshd[2935]: Accepted password for dave from 203.0.113.9 port 39254 ssh2
+2026-10-17T02:17:21.083919+03:00 bastion-01 sshd[2935]: pam_unix(sshd:session): session opened for user dave(uid=1004) by (uid=0)
+2026-10-17T02:17:21.319015+03:00 bastion-01 systemd-logind[2938]: New session 698 of user dave.
+2026-10-17T02:19:03.490599+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/cat /etc/shadow
+2026-10-17T02:23:48.812057+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/tar czf /tmp/.cache.tgz /home /etc
+2026-10-17T03:17:01.497128+03:00 bastion-01 CRON[1258]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T04:17:01.063616+03:00 bastion-01 CRON[1260]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T04:40:07.626887+03:00 bastion-01 sshd[2945]: Accepted publickey for root from 192.168.10.5 port 48288 ssh2: ED25519 SHA256:5cr6jjafjzhohv5xh08vc35megt5x7hl0xoymcobwmr
+2026-10-17T04:40:07.418966+03:00 bastion-01 sshd[2945]: pam_unix(sshd:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T04:40:07.915736+03:00 bastion-01 systemd-logind[2953]: New session 363 of user root.
+2026-10-17T05:17:01.678563+03:00 bastion-01 CRON[1265]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T06:17:01.298420+03:00 bastion-01 CRON[1273]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T07:17:01.930129+03:00 bastion-01 CRON[1280]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T08:17:01.023658+03:00 bastion-01 CRON[1286]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T09:17:01.372731+03:00 bastion-01 CRON[1294]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T10:17:01.640595+03:00 bastion-01 CRON[1297]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T10:30:15.904994+03:00 bastion-01 sshd[2966]: Accepted publickey for alice from 10.0.1.20 port 18005 ssh2: ED25519 SHA256:7nfg07fb2i9rwm2ql6d0cxo5cuo78wijjpih1xk9huf
+2026-10-17T10:30:15.979251+03:00 bastion-01 sshd[2966]: pam_unix(sshd:session): session opened for user alice(uid=1001) by (uid=0)
+2026-10-17T10:30:15.788046+03:00 bastion-01 systemd-logind[2971]: New session 990 of user alice.
+2026-10-17T10:41:50.862799+03:00 bastion-01 sudo:     alice : TTY=pts/1 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/apt update
+2026-10-17T11:17:01.517674+03:00 bastion-01 CRON[1299]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T12:17:01.228807+03:00 bastion-01 CRON[1300]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T13:17:01.135623+03:00 bastion-01 CRON[1305]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T14:17:01.417225+03:00 bastion-01 CRON[1309]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T15:17:01.961351+03:00 bastion-01 CRON[1316]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T16:17:01.084495+03:00 bastion-01 CRON[1324]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T17:17:01.471007+03:00 bastion-01 CRON[1327]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T18:17:01.576129+03:00 bastion-01 CRON[1334]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T19:17:01.926295+03:00 bastion-01 CRON[1339]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T20:17:01.859077+03:00 bastion-01 CRON[1342]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T21:17:01.905953+03:00 bastion-01 CRON[1349]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T22:17:01.291945+03:00 bastion-01 CRON[1358]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+2026-10-17T23:17:01.376198+03:00 bastion-01 CRON[1365]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)

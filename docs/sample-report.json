@@ -1,0 +1,996 @@
+{
+  "tool": "logsentinel",
+  "generated": "2026-10-19T12:25:24+00:00",
+  "source": "sample_auth.log",
+  "stats": {
+    "lines": 467,
+    "events": 280,
+    "unparsed": 0,
+    "ignored": 187
+  },
+  "config": {
+    "fail_threshold": 5,
+    "brute_threshold": 20,
+    "spray_users": 5,
+    "window_minutes": 10,
+    "lookback_minutes": 30,
+    "success_min_failures": 3,
+    "business_hours": [
+      7,
+      19
+    ],
+    "trusted_networks": [
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16"
+    ]
+  },
+  "severity_counts": {
+    "critical": 2,
+    "high": 3,
+    "medium": 3,
+    "low": 2
+  },
+  "findings": [
+    {
+      "rule": "success_after_failures",
+      "severity": "critical",
+      "title": "Login for bob from 10.0.1.77 after 6 failures",
+      "description": "password login for bob succeeded at 2026-10-16 14:10:12 after 6 failed attempts from the same source within 30 minutes (usernames tried: bob).",
+      "recommendation": "Treat as a possible account compromise: contact the user, review what the session ran (sudo entries, shell history), rotate the credential and consider isolating the host.",
+      "src_ip": "10.0.1.77",
+      "user": "bob",
+      "first_seen": "2026-10-16T14:02:10.367452",
+      "last_seen": "2026-10-16T14:10:12.467159",
+      "count": 7,
+      "evidence": [
+        {
+          "line": 380,
+          "raw": "2026-10-16T14:02:10.367452+03:00 bastion-01 sshd[2869]: Failed password for bob from 10.0.1.77 port 56939 ssh2"
+        },
+        {
+          "line": 381,
+          "raw": "2026-10-16T14:03:41.350672+03:00 bastion-01 sshd[2876]: Failed password for bob from 10.0.1.77 port 47927 ssh2"
+        },
+        {
+          "line": 382,
+          "raw": "2026-10-16T14:04:43.926587+03:00 bastion-01 sshd[2882]: Failed password for bob from 10.0.1.77 port 23123 ssh2"
+        },
+        {
+          "line": 383,
+          "raw": "2026-10-16T14:06:19.385126+03:00 bastion-01 sshd[2891]: Failed password for bob from 10.0.1.77 port 32577 ssh2"
+        },
+        {
+          "line": 384,
+          "raw": "2026-10-16T14:07:51.366200+03:00 bastion-01 sshd[2895]: Failed password for bob from 10.0.1.77 port 54056 ssh2"
+        },
+        {
+          "line": 385,
+          "raw": "2026-10-16T14:08:56.931938+03:00 bastion-01 sshd[2896]: Failed password for bob from 10.0.1.77 port 14482 ssh2"
+        },
+        {
+          "line": 386,
+          "raw": "2026-10-16T14:10:12.467159+03:00 bastion-01 sshd[2904]: Accepted password for bob from 10.0.1.77 port 27564 ssh2"
+        }
+      ],
+      "id": "LS-001",
+      "notes": ""
+    },
+    {
+      "rule": "success_after_failures",
+      "severity": "critical",
+      "title": "Login for dave from 203.0.113.9 after 4 failures",
+      "description": "password login for dave succeeded at 2026-10-17 02:17:21 after 4 failed attempts from the same source within 30 minutes (usernames tried: dave).",
+      "recommendation": "Treat as a possible account compromise: contact the user, review what the session ran (sudo entries, shell history), rotate the credential and consider isolating the host.",
+      "src_ip": "203.0.113.9",
+      "user": "dave",
+      "first_seen": "2026-10-17T02:11:04.150800",
+      "last_seen": "2026-10-17T02:17:21.969700",
+      "count": 5,
+      "evidence": [
+        {
+          "line": 430,
+          "raw": "2026-10-17T02:11:04.150800+03:00 bastion-01 sshd[2911]: Failed password for dave from 203.0.113.9 port 12094 ssh2"
+        },
+        {
+          "line": 431,
+          "raw": "2026-10-17T02:12:40.264364+03:00 bastion-01 sshd[2916]: Failed password for dave from 203.0.113.9 port 20782 ssh2"
+        },
+        {
+          "line": 432,
+          "raw": "2026-10-17T02:14:12.690864+03:00 bastion-01 sshd[2925]: Failed password for dave from 203.0.113.9 port 48646 ssh2"
+        },
+        {
+          "line": 433,
+          "raw": "2026-10-17T02:15:55.077070+03:00 bastion-01 sshd[2931]: Failed password for dave from 203.0.113.9 port 62459 ssh2"
+        },
+        {
+          "line": 435,
+          "raw": "2026-10-17T02:17:21.969700+03:00 bastion-01 sshd[2935]: Accepted password for dave from 203.0.113.9 port 39254 ssh2"
+        }
+      ],
+      "id": "LS-002",
+      "notes": ""
+    },
+    {
+      "rule": "brute_force",
+      "severity": "high",
+      "title": "140 failed logins from 203.0.113.45",
+      "description": "140 failed logins, at least 20 within 10 minutes. Usernames: admin, root.",
+      "recommendation": "Block the source, check whether any login from it later succeeded, rate-limit SSH (fail2ban, MaxAuthTries) and disable password authentication.",
+      "src_ip": "203.0.113.45",
+      "user": "admin, root",
+      "first_seen": "2026-10-15T03:12:04.861083",
+      "last_seen": "2026-10-15T03:19:09.590305",
+      "count": 140,
+      "evidence": [
+        {
+          "line": 4,
+          "raw": "2026-10-15T03:12:04.861083+03:00 bastion-01 sshd[1820]: Failed password for root from 203.0.113.45 port 14294 ssh2"
+        },
+        {
+          "line": 5,
+          "raw": "2026-10-15T03:12:08.281734+03:00 bastion-01 sshd[1828]: Failed password for root from 203.0.113.45 port 57140 ssh2"
+        },
+        {
+          "line": 6,
+          "raw": "2026-10-15T03:12:12.433097+03:00 bastion-01 sshd[1831]: Failed password for root from 203.0.113.45 port 60970 ssh2"
+        },
+        {
+          "line": 7,
+          "raw": "2026-10-15T03:12:14.614292+03:00 bastion-01 sshd[1840]: Failed password for root from 203.0.113.45 port 51203 ssh2"
+        },
+        {
+          "line": 8,
+          "raw": "2026-10-15T03:12:16.438210+03:00 bastion-01 sshd[1843]: Failed password for root from 203.0.113.45 port 64118 ssh2"
+        },
+        {
+          "line": 9,
+          "raw": "2026-10-15T03:12:19.397999+03:00 bastion-01 sshd[1845]: Failed password for invalid user admin from 203.0.113.45 port 40826 ssh2"
+        },
+        {
+          "line": 11,
+          "raw": "2026-10-15T03:12:22.370098+03:00 bastion-01 sshd[1858]: Failed password for root from 203.0.113.45 port 24133 ssh2"
+        },
+        {
+          "line": 12,
+          "raw": "2026-10-15T03:12:25.679688+03:00 bastion-01 sshd[1865]: Failed password for root from 203.0.113.45 port 40045 ssh2"
+        },
+        {
+          "line": 13,
+          "raw": "2026-10-15T03:12:28.399165+03:00 bastion-01 sshd[1873]: Failed password for root from 203.0.113.45 port 49899 ssh2"
+        },
+        {
+          "line": 14,
+          "raw": "2026-10-15T03:12:31.841956+03:00 bastion-01 sshd[1878]: Failed password for root from 203.0.113.45 port 36208 ssh2"
+        },
+        {
+          "line": 15,
+          "raw": "2026-10-15T03:12:33.092201+03:00 bastion-01 sshd[1882]: Failed password for root from 203.0.113.45 port 25731 ssh2"
+        },
+        {
+          "line": 16,
+          "raw": "2026-10-15T03:12:36.341645+03:00 bastion-01 sshd[1886]: Failed password for root from 203.0.113.45 port 56296 ssh2"
+        },
+        {
+          "line": 18,
+          "raw": "2026-10-15T03:12:38.314382+03:00 bastion-01 sshd[1901]: Failed password for root from 203.0.113.45 port 17837 ssh2"
+        },
+        {
+          "line": 19,
+          "raw": "2026-10-15T03:12:42.542583+03:00 bastion-01 sshd[1908]: Failed password for root from 203.0.113.45 port 36315 ssh2"
+        },
+        {
+          "line": 20,
+          "raw": "2026-10-15T03:12:46.486799+03:00 bastion-01 sshd[1915]: Failed password for root from 203.0.113.45 port 29208 ssh2"
+        },
+        {
+          "line": 21,
+          "raw": "2026-10-15T03:12:49.475073+03:00 bastion-01 sshd[1921]: Failed password for root from 203.0.113.45 port 45341 ssh2"
+        },
+        {
+          "line": 22,
+          "raw": "2026-10-15T03:12:51.103773+03:00 bastion-01 sshd[1925]: Failed password for root from 203.0.113.45 port 35446 ssh2"
+        },
+        {
+          "line": 23,
+          "raw": "2026-10-15T03:12:54.973510+03:00 bastion-01 sshd[1934]: Failed password for root from 203.0.113.45 port 27296 ssh2"
+        },
+        {
+          "line": 25,
+          "raw": "2026-10-15T03:12:56.461544+03:00 bastion-01 sshd[1944]: Failed password for invalid user admin from 203.0.113.45 port 32921 ssh2"
+        },
+        {
+          "line": 26,
+          "raw": "2026-10-15T03:13:00.725172+03:00 bastion-01 sshd[1950]: Failed password for invalid user admin from 203.0.113.45 port 39520 ssh2"
+        },
+        {
+          "line": 27,
+          "raw": "2026-10-15T03:13:04.380336+03:00 bastion-01 sshd[1953]: Failed password for root from 203.0.113.45 port 7069 ssh2"
+        },
+        {
+          "line": 28,
+          "raw": "2026-10-15T03:13:07.537493+03:00 bastion-01 sshd[1958]: Failed password for root from 203.0.113.45 port 5944 ssh2"
+        },
+        {
+          "line": 29,
+          "raw": "2026-10-15T03:13:09.723399+03:00 bastion-01 sshd[1963]: Failed password for root from 203.0.113.45 port 59646 ssh2"
+        },
+        {
+          "line": 30,
+          "raw": "2026-10-15T03:13:12.661757+03:00 bastion-01 sshd[1970]: Failed password for invalid user admin from 203.0.113.45 port 34373 ssh2"
+        },
+        {
+          "line": 32,
+          "raw": "2026-10-15T03:13:16.432285+03:00 bastion-01 sshd[1983]: Failed password for root from 203.0.113.45 port 59556 ssh2"
+        },
+        {
+          "line": 33,
+          "raw": "2026-10-15T03:13:18.370340+03:00 bastion-01 sshd[1985]: Failed password for root from 203.0.113.45 port 38048 ssh2"
+        },
+        {
+          "line": 34,
+          "raw": "2026-10-15T03:13:22.725341+03:00 bastion-01 sshd[1986]: Failed password for invalid user admin from 203.0.113.45 port 42738 ssh2"
+        },
+        {
+          "line": 35,
+          "raw": "2026-10-15T03:13:25.745157+03:00 bastion-01 sshd[1991]: Failed password for root from 203.0.113.45 port 1206 ssh2"
+        },
+        {
+          "line": 36,
+          "raw": "2026-10-15T03:13:29.416878+03:00 bastion-01 sshd[1996]: Failed password for root from 203.0.113.45 port 61122 ssh2"
+        },
+        {
+          "line": 37,
+          "raw": "2026-10-15T03:13:31.206202+03:00 bastion-01 sshd[1997]: Failed password for root from 203.0.113.45 port 44809 ssh2"
+        },
+        {
+          "line": 39,
+          "raw": "2026-10-15T03:13:35.539320+03:00 bastion-01 sshd[2014]: Failed password for root from 203.0.113.45 port 58114 ssh2"
+        },
+        {
+          "line": 40,
+          "raw": "2026-10-15T03:13:37.152414+03:00 bastion-01 sshd[2016]: Failed password for root from 203.0.113.45 port 27965 ssh2"
+        },
+        {
+          "line": 41,
+          "raw": "2026-10-15T03:13:39.030444+03:00 bastion-01 sshd[2018]: Failed password for root from 203.0.113.45 port 34413 ssh2"
+        },
+        {
+          "line": 42,
+          "raw": "2026-10-15T03:13:41.514249+03:00 bastion-01 sshd[2027]: Failed password for root from 203.0.113.45 port 63141 ssh2"
+        },
+        {
+          "line": 43,
+          "raw": "2026-10-15T03:13:44.681679+03:00 bastion-01 sshd[2028]: Failed password for root from 203.0.113.45 port 53885 ssh2"
+        },
+        {
+          "line": 44,
+          "raw": "2026-10-15T03:13:46.150918+03:00 bastion-01 sshd[2034]: Failed password for root from 203.0.113.45 port 38959 ssh2"
+        },
+        {
+          "line": 46,
+          "raw": "2026-10-15T03:13:49.901070+03:00 bastion-01 sshd[2040]: Failed password for root from 203.0.113.45 port 18496 ssh2"
+        },
+        {
+          "line": 47,
+          "raw": "2026-10-15T03:13:53.654314+03:00 bastion-01 sshd[2048]: Failed password for root from 203.0.113.45 port 13584 ssh2"
+        },
+        {
+          "line": 48,
+          "raw": "2026-10-15T03:13:56.610965+03:00 bastion-01 sshd[2055]: Failed password for root from 203.0.113.45 port 15445 ssh2"
+        },
+        {
+          "line": 49,
+          "raw": "2026-10-15T03:13:58.261440+03:00 bastion-01 sshd[2059]: Failed password for root from 203.0.113.45 port 41667 ssh2"
+        },
+        {
+          "line": 50,
+          "raw": "2026-10-15T03:14:00.330084+03:00 bastion-01 sshd[2062]: Failed password for root from 203.0.113.45 port 62026 ssh2"
+        },
+        {
+          "line": 51,
+          "raw": "2026-10-15T03:14:02.318427+03:00 bastion-01 sshd[2070]: Failed password for invalid user admin from 203.0.113.45 port 54494 ssh2"
+        },
+        {
+          "line": 53,
+          "raw": "2026-10-15T03:14:05.710181+03:00 bastion-01 sshd[2079]: Failed password for invalid user admin from 203.0.113.45 port 5449 ssh2"
+        },
+        {
+          "line": 54,
+          "raw": "2026-10-15T03:14:08.433580+03:00 bastion-01 sshd[2083]: Failed password for root from 203.0.113.45 port 39350 ssh2"
+        },
+        {
+          "line": 55,
+          "raw": "2026-10-15T03:14:11.023515+03:00 bastion-01 sshd[2091]: Failed password for root from 203.0.113.45 port 47670 ssh2"
+        },
+        {
+          "line": 56,
+          "raw": "2026-10-15T03:14:13.397420+03:00 bastion-01 sshd[2097]: Failed password for root from 203.0.113.45 port 12160 ssh2"
+        },
+        {
+          "line": 57,
+          "raw": "2026-10-15T03:14:15.415264+03:00 bastion-01 sshd[2102]: Failed password for root from 203.0.113.45 port 58846 ssh2"
+        },
+        {
+          "line": 58,
+          "raw": "2026-10-15T03:14:19.913818+03:00 bastion-01 sshd[2111]: Failed password for root from 203.0.113.45 port 22979 ssh2"
+        },
+        {
+          "line": 60,
+          "raw": "2026-10-15T03:14:23.865940+03:00 bastion-01 sshd[2124]: Failed password for root from 203.0.113.45 port 9103 ssh2"
+        },
+        {
+          "line": 61,
+          "raw": "2026-10-15T03:14:26.489699+03:00 bastion-01 sshd[2128]: Failed password for root from 203.0.113.45 port 26410 ssh2"
+        },
+        {
+          "line": 62,
+          "raw": "2026-10-15T03:14:29.292692+03:00 bastion-01 sshd[2129]: Failed password for root from 203.0.113.45 port 29569 ssh2"
+        },
+        {
+          "line": 63,
+          "raw": "2026-10-15T03:14:33.253545+03:00 bastion-01 sshd[2132]: Failed password for root from 203.0.113.45 port 53772 ssh2"
+        },
+        {
+          "line": 64,
+          "raw": "2026-10-15T03:14:37.571333+03:00 bastion-01 sshd[2137]: Failed password for root from 203.0.113.45 port 13888 ssh2"
+        },
+        {
+          "line": 65,
+          "raw": "2026-10-15T03:14:39.166956+03:00 bastion-01 sshd[2141]: Failed password for root from 203.0.113.45 port 31632 ssh2"
+        },
+        {
+          "line": 67,
+          "raw": "2026-10-15T03:14:43.311693+03:00 bastion-01 sshd[2151]: Failed password for root from 203.0.113.45 port 42268 ssh2"
+        },
+        {
+          "line": 68,
+          "raw": "2026-10-15T03:14:46.708105+03:00 bastion-01 sshd[2159]: Failed password for root from 203.0.113.45 port 15918 ssh2"
+        },
+        {
+          "line": 69,
+          "raw": "2026-10-15T03:14:48.616105+03:00 bastion-01 sshd[2167]: Failed password for invalid user admin from 203.0.113.45 port 18113 ssh2"
+        },
+        {
+          "line": 70,
+          "raw": "2026-10-15T03:14:51.222866+03:00 bastion-01 sshd[2176]: Failed password for root from 203.0.113.45 port 27510 ssh2"
+        },
+        {
+          "line": 71,
+          "raw": "2026-10-15T03:14:53.095912+03:00 bastion-01 sshd[2185]: Failed password for invalid user admin from 203.0.113.45 port 9071 ssh2"
+        },
+        {
+          "line": 72,
+          "raw": "2026-10-15T03:14:57.030111+03:00 bastion-01 sshd[2192]: Failed password for invalid user admin from 203.0.113.45 port 49254 ssh2"
+        },
+        {
+          "line": 74,
+          "raw": "2026-10-15T03:14:59.813839+03:00 bastion-01 sshd[2198]: Failed password for root from 203.0.113.45 port 6662 ssh2"
+        },
+        {
+          "line": 75,
+          "raw": "2026-10-15T03:15:01.071387+03:00 bastion-01 sshd[2200]: Failed password for root from 203.0.113.45 port 44457 ssh2"
+        },
+        {
+          "line": 76,
+          "raw": "2026-10-15T03:15:05.795296+03:00 bastion-01 sshd[2209]: Failed password for invalid user admin from 203.0.113.45 port 53792 ssh2"
+        },
+        {
+          "line": 77,
+          "raw": "2026-10-15T03:15:08.092211+03:00 bastion-01 sshd[2214]: Failed password for root from 203.0.113.45 port 48125 ssh2"
+        },
+        {
+          "line": 78,
+          "raw": "2026-10-15T03:15:10.296080+03:00 bastion-01 sshd[2221]: Failed password for root from 203.0.113.45 port 54555 ssh2"
+        },
+        {
+          "line": 79,
+          "raw": "2026-10-15T03:15:13.812643+03:00 bastion-01 sshd[2229]: Failed password for root from 203.0.113.45 port 60591 ssh2"
+        },
+        {
+          "line": 81,
+          "raw": "2026-10-15T03:15:16.940513+03:00 bastion-01 sshd[2238]: Failed password for root from 203.0.113.45 port 25048 ssh2"
+        },
+        {
+          "line": 82,
+          "raw": "2026-10-15T03:15:19.260488+03:00 bastion-01 sshd[2246]: Failed password for root from 203.0.113.45 port 47147 ssh2"
+        },
+        {
+          "line": 83,
+          "raw": "2026-10-15T03:15:22.190481+03:00 bastion-01 sshd[2248]: Failed password for root from 203.0.113.45 port 42234 ssh2"
+        },
+        {
+          "line": 84,
+          "raw": "2026-10-15T03:15:25.747201+03:00 bastion-01 sshd[2252]: Failed password for root from 203.0.113.45 port 60837 ssh2"
+        },
+        {
+          "line": 85,
+          "raw": "2026-10-15T03:15:29.451624+03:00 bastion-01 sshd[2255]: Failed password for root from 203.0.113.45 port 3645 ssh2"
+        },
+        {
+          "line": 86,
+          "raw": "2026-10-15T03:15:31.774188+03:00 bastion-01 sshd[2262]: Failed password for root from 203.0.113.45 port 11260 ssh2"
+        },
+        {
+          "line": 88,
+          "raw": "2026-10-15T03:15:35.597861+03:00 bastion-01 sshd[2275]: Failed password for root from 203.0.113.45 port 12798 ssh2"
+        },
+        {
+          "line": 89,
+          "raw": "2026-10-15T03:15:38.702686+03:00 bastion-01 sshd[2282]: Failed password for root from 203.0.113.45 port 17716 ssh2"
+        },
+        {
+          "line": 90,
+          "raw": "2026-10-15T03:15:42.117306+03:00 bastion-01 sshd[2283]: Failed password for root from 203.0.113.45 port 62344 ssh2"
+        },
+        {
+          "line": 91,
+          "raw": "2026-10-15T03:15:46.256331+03:00 bastion-01 sshd[2284]: Failed password for root from 203.0.113.45 port 3839 ssh2"
+        },
+        {
+          "line": 92,
+          "raw": "2026-10-15T03:15:50.220346+03:00 bastion-01 sshd[2290]: Failed password for root from 203.0.113.45 port 52891 ssh2"
+        },
+        {
+          "line": 93,
+          "raw": "2026-10-15T03:15:53.728421+03:00 bastion-01 sshd[2297]: Failed password for root from 203.0.113.45 port 6669 ssh2"
+        },
+        {
+          "line": 95,
+          "raw": "2026-10-15T03:15:57.094302+03:00 bastion-01 sshd[2313]: Failed password for invalid user admin from 203.0.113.45 port 19450 ssh2"
+        },
+        {
+          "line": 96,
+          "raw": "2026-10-15T03:16:00.975394+03:00 bastion-01 sshd[2321]: Failed password for invalid user admin from 203.0.113.45 port 28809 ssh2"
+        },
+        {
+          "line": 97,
+          "raw": "2026-10-15T03:16:03.533366+03:00 bastion-01 sshd[2329]: Failed password for root from 203.0.113.45 port 49429 ssh2"
+        },
+        {
+          "line": 98,
+          "raw": "2026-10-15T03:16:05.705818+03:00 bastion-01 sshd[2336]: Failed password for root from 203.0.113.45 port 14522 ssh2"
+        },
+        {
+          "line": 99,
+          "raw": "2026-10-15T03:16:09.513288+03:00 bastion-01 sshd[2339]: Failed password for invalid user admin from 203.0.113.45 port 52027 ssh2"
+        },
+        {
+          "line": 100,
+          "raw": "2026-10-15T03:16:11.273885+03:00 bastion-01 sshd[2348]: Failed password for root from 203.0.113.45 port 47078 ssh2"
+        },
+        {
+          "line": 102,
+          "raw": "2026-10-15T03:16:15.062267+03:00 bastion-01 sshd[2361]: Failed password for root from 203.0.113.45 port 18081 ssh2"
+        },
+        {
+          "line": 103,
+          "raw": "2026-10-15T03:16:17.211194+03:00 bastion-01 sshd[2363]: Failed password for root from 203.0.113.45 port 28001 ssh2"
+        },
+        {
+          "line": 104,
+          "raw": "2026-10-15T03:16:21.702896+03:00 bastion-01 sshd[2371]: Failed password for root from 203.0.113.45 port 9973 ssh2"
+        },
+        {
+          "line": 105,
+          "raw": "2026-10-15T03:16:24.540416+03:00 bastion-01 sshd[2372]: Failed password for root from 203.0.113.45 port 16864 ssh2"
+        },
+        {
+          "line": 106,
+          "raw": "2026-10-15T03:16:28.731958+03:00 bastion-01 sshd[2378]: Failed password for root from 203.0.113.45 port 62355 ssh2"
+        },
+        {
+          "line": 107,
+          "raw": "2026-10-15T03:16:31.616094+03:00 bastion-01 sshd[2381]: Failed password for root from 203.0.113.45 port 47404 ssh2"
+        },
+        {
+          "line": 109,
+          "raw": "2026-10-15T03:16:35.797459+03:00 bastion-01 sshd[2392]: Failed password for invalid user admin from 203.0.113.45 port 36954 ssh2"
+        },
+        {
+          "line": 110,
+          "raw": "2026-10-15T03:16:37.880264+03:00 bastion-01 sshd[2400]: Failed password for root from 203.0.113.45 port 11168 ssh2"
+        },
+        {
+          "line": 111,
+          "raw": "2026-10-15T03:16:40.012972+03:00 bastion-01 sshd[2405]: Failed password for invalid user admin from 203.0.113.45 port 8526 ssh2"
+        },
+        {
+          "line": 112,
+          "raw": "2026-10-15T03:16:43.939326+03:00 bastion-01 sshd[2406]: Failed password for root from 203.0.113.45 port 3868 ssh2"
+        },
+        {
+          "line": 113,
+          "raw": "2026-10-15T03:16:46.469781+03:00 bastion-01 sshd[2411]: Failed password for root from 203.0.113.45 port 8271 ssh2"
+        },
+        {
+          "line": 114,
+          "raw": "2026-10-15T03:16:48.596834+03:00 bastion-01 sshd[2419]: Failed password for root from 203.0.113.45 port 30192 ssh2"
+        },
+        {
+          "line": 116,
+          "raw": "2026-10-15T03:16:52.786899+03:00 bastion-01 sshd[2432]: Failed password for root from 203.0.113.45 port 1732 ssh2"
+        },
+        {
+          "line": 117,
+          "raw": "2026-10-15T03:16:55.774895+03:00 bastion-01 sshd[2438]: Failed password for root from 203.0.113.45 port 48022 ssh2"
+        },
+        {
+          "line": 118,
+          "raw": "2026-10-15T03:16:59.455334+03:00 bastion-01 sshd[2446]: Failed password for root from 203.0.113.45 port 43301 ssh2"
+        },
+        {
+          "line": 120,
+          "raw": "2026-10-15T03:17:02.008705+03:00 bastion-01 sshd[2452]: Failed password for root from 203.0.113.45 port 36614 ssh2"
+        },
+        {
+          "line": 121,
+          "raw": "2026-10-15T03:17:05.658237+03:00 bastion-01 sshd[2457]: Failed password for invalid user admin from 203.0.113.45 port 43262 ssh2"
+        },
+        {
+          "line": 122,
+          "raw": "2026-10-15T03:17:09.684796+03:00 bastion-01 sshd[2462]: Failed password for invalid user admin from 203.0.113.45 port 43793 ssh2"
+        },
+        {
+          "line": 124,
+          "raw": "2026-10-15T03:17:13.880362+03:00 bastion-01 sshd[2471]: Failed password for root from 203.0.113.45 port 51777 ssh2"
+        },
+        {
+          "line": 125,
+          "raw": "2026-10-15T03:17:15.886806+03:00 bastion-01 sshd[2480]: Failed password for root from 203.0.113.45 port 13196 ssh2"
+        },
+        {
+          "line": 126,
+          "raw": "2026-10-15T03:17:19.778382+03:00 bastion-01 sshd[2485]: Failed password for root from 203.0.113.45 port 52444 ssh2"
+        },
+        {
+          "line": 127,
+          "raw": "2026-10-15T03:17:23.335707+03:00 bastion-01 sshd[2491]: Failed password for root from 203.0.113.45 port 13118 ssh2"
+        },
+        {
+          "line": 128,
+          "raw": "2026-10-15T03:17:25.878518+03:00 bastion-01 sshd[2497]: Failed password for root from 203.0.113.45 port 37143 ssh2"
+        },
+        {
+          "line": 129,
+          "raw": "2026-10-15T03:17:28.594405+03:00 bastion-01 sshd[2499]: Failed password for root from 203.0.113.45 port 3727 ssh2"
+        },
+        {
+          "line": 131,
+          "raw": "2026-10-15T03:17:30.523795+03:00 bastion-01 sshd[2513]: Failed password for invalid user admin from 203.0.113.45 port 33423 ssh2"
+        },
+        {
+          "line": 132,
+          "raw": "2026-10-15T03:17:34.148780+03:00 bastion-01 sshd[2515]: Failed password for root from 203.0.113.45 port 20656 ssh2"
+        },
+        {
+          "line": 133,
+          "raw": "2026-10-15T03:17:38.667686+03:00 bastion-01 sshd[2523]: Failed password for root from 203.0.113.45 port 10087 ssh2"
+        },
+        {
+          "line": 134,
+          "raw": "2026-10-15T03:17:41.502688+03:00 bastion-01 sshd[2531]: Failed password for root from 203.0.113.45 port 3641 ssh2"
+        },
+        {
+          "line": 135,
+          "raw": "2026-10-15T03:17:43.033576+03:00 bastion-01 sshd[2532]: Failed password for root from 203.0.113.45 port 25435 ssh2"
+        },
+        {
+          "line": 136,
+          "raw": "2026-10-15T03:17:47.446110+03:00 bastion-01 sshd[2541]: Failed password for invalid user admin from 203.0.113.45 port 52595 ssh2"
+        },
+        {
+          "line": 138,
+          "raw": "2026-10-15T03:17:51.933886+03:00 bastion-01 sshd[2553]: Failed password for root from 203.0.113.45 port 47605 ssh2"
+        },
+        {
+          "line": 139,
+          "raw": "2026-10-15T03:17:54.947912+03:00 bastion-01 sshd[2556]: Failed password for root from 203.0.113.45 port 1600 ssh2"
+        },
+        {
+          "line": 140,
+          "raw": "2026-10-15T03:17:58.464682+03:00 bastion-01 sshd[2557]: Failed password for root from 203.0.113.45 port 20405 ssh2"
+        },
+        {
+          "line": 141,
+          "raw": "2026-10-15T03:18:02.491612+03:00 bastion-01 sshd[2561]: Failed password for root from 203.0.113.45 port 38216 ssh2"
+        },
+        {
+          "line": 142,
+          "raw": "2026-10-15T03:18:04.449183+03:00 bastion-01 sshd[2569]: Failed password for root from 203.0.113.45 port 34891 ssh2"
+        },
+        {
+          "line": 143,
+          "raw": "2026-10-15T03:18:08.420863+03:00 bastion-01 sshd[2572]: Failed password for invalid user admin from 203.0.113.45 port 57740 ssh2"
+        },
+        {
+          "line": 145,
+          "raw": "2026-10-15T03:18:10.592469+03:00 bastion-01 sshd[2579]: Failed password for root from 203.0.113.45 port 22751 ssh2"
+        },
+        {
+          "line": 146,
+          "raw": "2026-10-15T03:18:14.688387+03:00 bastion-01 sshd[2587]: Failed password for root from 203.0.113.45 port 25183 ssh2"
+        },
+        {
+          "line": 147,
+          "raw": "2026-10-15T03:18:18.556168+03:00 bastion-01 sshd[2593]: Failed password for root from 203.0.113.45 port 57729 ssh2"
+        },
+        {
+          "line": 148,
+          "raw": "2026-10-15T03:18:22.711651+03:00 bastion-01 sshd[2597]: Failed password for root from 203.0.113.45 port 13400 ssh2"
+        },
+        {
+          "line": 149,
+          "raw": "2026-10-15T03:18:26.692565+03:00 bastion-01 sshd[2600]: Failed password for root from 203.0.113.45 port 6608 ssh2"
+        },
+        {
+          "line": 150,
+          "raw": "2026-10-15T03:18:30.377488+03:00 bastion-01 sshd[2607]: Failed password for root from 203.0.113.45 port 39085 ssh2"
+        },
+        {
+          "line": 152,
+          "raw": "2026-10-15T03:18:33.189269+03:00 bastion-01 sshd[2615]: Failed password for root from 203.0.113.45 port 8511 ssh2"
+        },
+        {
+          "line": 153,
+          "raw": "2026-10-15T03:18:35.904054+03:00 bastion-01 sshd[2619]: Failed password for root from 203.0.113.45 port 8381 ssh2"
+        },
+        {
+          "line": 154,
+          "raw": "2026-10-15T03:18:38.702796+03:00 bastion-01 sshd[2628]: Failed password for root from 203.0.113.45 port 13314 ssh2"
+        },
+        {
+          "line": 155,
+          "raw": "2026-10-15T03:18:41.480410+03:00 bastion-01 sshd[2637]: Failed password for root from 203.0.113.45 port 15900 ssh2"
+        },
+        {
+          "line": 156,
+          "raw": "2026-10-15T03:18:43.771318+03:00 bastion-01 sshd[2639]: Failed password for root from 203.0.113.45 port 46684 ssh2"
+        },
+        {
+          "line": 157,
+          "raw": "2026-10-15T03:18:47.892901+03:00 bastion-01 sshd[2641]: Failed password for invalid user admin from 203.0.113.45 port 38173 ssh2"
+        },
+        {
+          "line": 159,
+          "raw": "2026-10-15T03:18:50.531874+03:00 bastion-01 sshd[2652]: Failed password for root from 203.0.113.45 port 33997 ssh2"
+        },
+        {
+          "line": 160,
+          "raw": "2026-10-15T03:18:54.657032+03:00 bastion-01 sshd[2654]: Failed password for invalid user admin from 203.0.113.45 port 63157 ssh2"
+        },
+        {
+          "line": 161,
+          "raw": "2026-10-15T03:18:58.570739+03:00 bastion-01 sshd[2661]: Failed password for root from 203.0.113.45 port 31169 ssh2"
+        },
+        {
+          "line": 162,
+          "raw": "2026-10-15T03:19:00.812625+03:00 bastion-01 sshd[2669]: Failed password for invalid user admin from 203.0.113.45 port 13583 ssh2"
+        },
+        {
+          "line": 163,
+          "raw": "2026-10-15T03:19:02.423998+03:00 bastion-01 sshd[2670]: Failed password for root from 203.0.113.45 port 51890 ssh2"
+        },
+        {
+          "line": 164,
+          "raw": "2026-10-15T03:19:04.736028+03:00 bastion-01 sshd[2671]: Failed password for root from 203.0.113.45 port 3759 ssh2"
+        },
+        {
+          "line": 166,
+          "raw": "2026-10-15T03:19:07.952668+03:00 bastion-01 sshd[2682]: Failed password for root from 203.0.113.45 port 9910 ssh2"
+        },
+        {
+          "line": 167,
+          "raw": "2026-10-15T03:19:09.590305+03:00 bastion-01 sshd[2686]: Failed password for root from 203.0.113.45 port 58179 ssh2"
+        }
+      ],
+      "id": "LS-003",
+      "notes": ""
+    },
+    {
+      "rule": "password_spray",
+      "severity": "high",
+      "title": "36 failed logins from 198.51.100.23",
+      "description": "36 failed logins spread over 12 different usernames. Usernames: admin, deploy, ftp, git, guest (+7 more).",
+      "recommendation": "Block the source at the firewall or with fail2ban, check whether any targeted account shares a weak password, and move SSH to key-based authentication.",
+      "src_ip": "198.51.100.23",
+      "user": "admin, deploy, ftp, git, guest (+7 more)",
+      "first_seen": "2026-10-16T10:00:53.349993",
+      "last_seen": "2026-10-16T12:29:35.994853",
+      "count": 36,
+      "evidence": [
+        {
+          "line": 316,
+          "raw": "2026-10-16T10:00:53.349993+03:00 bastion-01 sshd[2822]: Failed password for invalid user user from 198.51.100.23 port 38979 ssh2"
+        },
+        {
+          "line": 317,
+          "raw": "2026-10-16T10:05:07.914759+03:00 bastion-01 sshd[2851]: Failed password for invalid user ftp from 198.51.100.23 port 37765 ssh2"
+        },
+        {
+          "line": 318,
+          "raw": "2026-10-16T10:09:31.596598+03:00 bastion-01 sshd[2846]: Failed password for invalid user guest from 198.51.100.23 port 18198 ssh2"
+        },
+        {
+          "line": 320,
+          "raw": "2026-10-16T10:21:38.564588+03:00 bastion-01 sshd[2756]: Failed password for invalid user ubuntu from 198.51.100.23 port 58394 ssh2"
+        },
+        {
+          "line": 321,
+          "raw": "2026-10-16T10:25:27.347465+03:00 bastion-01 sshd[2808]: Failed password for invalid user git from 198.51.100.23 port 24681 ssh2"
+        },
+        {
+          "line": 322,
+          "raw": "2026-10-16T10:29:53.380539+03:00 bastion-01 sshd[2853]: Failed password for invalid user ftp from 198.51.100.23 port 28958 ssh2"
+        },
+        {
+          "line": 323,
+          "raw": "2026-10-16T10:33:59.918844+03:00 bastion-01 sshd[2830]: Failed password for invalid user user from 198.51.100.23 port 17325 ssh2"
+        },
+        {
+          "line": 324,
+          "raw": "2026-10-16T10:34:22.079569+03:00 bastion-01 sshd[2795]: Failed password for invalid user deploy from 198.51.100.23 port 63802 ssh2"
+        },
+        {
+          "line": 325,
+          "raw": "2026-10-16T10:38:20.538109+03:00 bastion-01 sshd[2705]: Failed password for invalid user test from 198.51.100.23 port 16706 ssh2"
+        },
+        {
+          "line": 326,
+          "raw": "2026-10-16T10:53:09.022317+03:00 bastion-01 sshd[2731]: Failed password for invalid user oracle from 198.51.100.23 port 46501 ssh2"
+        },
+        {
+          "line": 327,
+          "raw": "2026-10-16T10:53:21.035805+03:00 bastion-01 sshd[2719]: Failed password for invalid user oracle from 198.51.100.23 port 22478 ssh2"
+        },
+        {
+          "line": 328,
+          "raw": "2026-10-16T10:54:08.326376+03:00 bastion-01 sshd[2799]: Failed password for invalid user git from 198.51.100.23 port 35644 ssh2"
+        },
+        {
+          "line": 329,
+          "raw": "2026-10-16T10:55:02.843170+03:00 bastion-01 sshd[2698]: Failed password for invalid user admin from 198.51.100.23 port 56170 ssh2"
+        },
+        {
+          "line": 333,
+          "raw": "2026-10-16T11:06:36.158265+03:00 bastion-01 sshd[2767]: Failed password for invalid user pi from 198.51.100.23 port 2646 ssh2"
+        },
+        {
+          "line": 334,
+          "raw": "2026-10-16T11:11:21.412526+03:00 bastion-01 sshd[2786]: Failed password for invalid user deploy from 198.51.100.23 port 11397 ssh2"
+        },
+        {
+          "line": 335,
+          "raw": "2026-10-16T11:13:04.839337+03:00 bastion-01 sshd[2768]: Failed password for invalid user pi from 198.51.100.23 port 32741 ssh2"
+        },
+        {
+          "line": 336,
+          "raw": "2026-10-16T11:13:20.104485+03:00 bastion-01 sshd[2717]: Failed password for invalid user test from 198.51.100.23 port 54537 ssh2"
+        },
+        {
+          "line": 341,
+          "raw": "2026-10-16T11:26:01.732544+03:00 bastion-01 sshd[2849]: Failed password for invalid user ftp from 198.51.100.23 port 39324 ssh2"
+        },
+        {
+          "line": 342,
+          "raw": "2026-10-16T11:26:33.329630+03:00 bastion-01 sshd[2814]: Failed password for invalid user user from 198.51.100.23 port 26444 ssh2"
+        },
+        {
+          "line": 345,
+          "raw": "2026-10-16T11:40:38.286615+03:00 bastion-01 sshd[2840]: Failed password for invalid user guest from 198.51.100.23 port 18893 ssh2"
+        },
+        {
+          "line": 346,
+          "raw": "2026-10-16T11:50:35.756840+03:00 bastion-01 sshd[2711]: Failed password for invalid user test from 198.51.100.23 port 63154 ssh2"
+        },
+        {
+          "line": 351,
+          "raw": "2026-10-16T11:54:32.865736+03:00 bastion-01 sshd[2699]: Failed password for invalid user admin from 198.51.100.23 port 45622 ssh2"
+        },
+        {
+          "line": 352,
+          "raw": "2026-10-16T11:58:40.077337+03:00 bastion-01 sshd[2741]: Failed password for invalid user postgres from 198.51.100.23 port 33008 ssh2"
+        },
+        {
+          "line": 353,
+          "raw": "2026-10-16T11:58:47.915211+03:00 bastion-01 sshd[2857]: Failed password for invalid user www-data from 198.51.100.23 port 52996 ssh2"
+        },
+        {
+          "line": 354,
+          "raw": "2026-10-16T11:59:30.318762+03:00 bastion-01 sshd[2859]: Failed password for invalid user www-data from 198.51.100.23 port 10273 ssh2"
+        },
+        {
+          "line": 355,
+          "raw": "2026-10-16T12:00:06.581169+03:00 bastion-01 sshd[2744]: Failed password for invalid user postgres from 198.51.100.23 port 13165 ssh2"
+        },
+        {
+          "line": 356,
+          "raw": "2026-10-16T12:02:44.883906+03:00 bastion-01 sshd[2778]: Failed password for invalid user deploy from 198.51.100.23 port 45556 ssh2"
+        },
+        {
+          "line": 357,
+          "raw": "2026-10-16T12:05:34.650558+03:00 bastion-01 sshd[2771]: Failed password for invalid user pi from 198.51.100.23 port 5913 ssh2"
+        },
+        {
+          "line": 358,
+          "raw": "2026-10-16T12:05:43.119093+03:00 bastion-01 sshd[2739]: Failed password for invalid user postgres from 198.51.100.23 port 39124 ssh2"
+        },
+        {
+          "line": 359,
+          "raw": "2026-10-16T12:14:05.221648+03:00 bastion-01 sshd[2800]: Failed password for invalid user git from 198.51.100.23 port 39639 ssh2"
+        },
+        {
+          "line": 361,
+          "raw": "2026-10-16T12:17:37.176166+03:00 bastion-01 sshd[2692]: Failed password for invalid user admin from 198.51.100.23 port 58091 ssh2"
+        },
+        {
+          "line": 362,
+          "raw": "2026-10-16T12:18:48.266969+03:00 bastion-01 sshd[2723]: Failed password for invalid user oracle from 198.51.100.23 port 45275 ssh2"
+        },
+        {
+          "line": 363,
+          "raw": "2026-10-16T12:19:39.876826+03:00 bastion-01 sshd[2751]: Failed password for invalid user ubuntu from 198.51.100.23 port 58285 ssh2"
+        },
+        {
+          "line": 367,
+          "raw": "2026-10-16T12:24:26.533627+03:00 bastion-01 sshd[2865]: Failed password for invalid user www-data from 198.51.100.23 port 23404 ssh2"
+        },
+        {
+          "line": 371,
+          "raw": "2026-10-16T12:27:57.762276+03:00 bastion-01 sshd[2833]: Failed password for invalid user guest from 198.51.100.23 port 3998 ssh2"
+        },
+        {
+          "line": 373,
+          "raw": "2026-10-16T12:29:35.994853+03:00 bastion-01 sshd[2761]: Failed password for invalid user ubuntu from 198.51.100.23 port 50925 ssh2"
+        }
+      ],
+      "id": "LS-004",
+      "notes": ""
+    },
+    {
+      "rule": "off_hours_login",
+      "severity": "high",
+      "title": "1 off-hours login(s) for root from 192.168.10.5",
+      "description": "Successful logins outside 07:00-19:00 on weekdays. Times: Sat 04:40.",
+      "recommendation": "Confirm the activity with the user or a change ticket. Root logins at night deserve a direct check of what was run.",
+      "src_ip": "192.168.10.5",
+      "user": "root",
+      "first_seen": "2026-10-17T04:40:07.626887",
+      "last_seen": "2026-10-17T04:40:07.626887",
+      "count": 1,
+      "evidence": [
+        {
+          "line": 442,
+          "raw": "2026-10-17T04:40:07.626887+03:00 bastion-01 sshd[2945]: Accepted publickey for root from 192.168.10.5 port 48288 ssh2: ED25519 SHA256:5cr6jjafjzhohv5xh08vc35megt5x7hl0xoymcobwmr"
+        }
+      ],
+      "id": "LS-005",
+      "notes": ""
+    },
+    {
+      "rule": "untrusted_source",
+      "severity": "medium",
+      "title": "1 login(s) for erin from untrusted 198.51.100.77",
+      "description": "Source is outside the trusted networks (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).",
+      "recommendation": "Verify the source belongs to the user (VPN, home, travel). Unknown external sources with a successful login warrant credential rotation.",
+      "src_ip": "198.51.100.77",
+      "user": "erin",
+      "first_seen": "2026-10-15T11:30:44.140659",
+      "last_seen": "2026-10-15T11:30:44.140659",
+      "count": 1,
+      "evidence": [
+        {
+          "line": 194,
+          "raw": "2026-10-15T11:30:44.140659+03:00 bastion-01 sshd[2954]: Accepted publickey for erin from 198.51.100.77 port 2710 ssh2: ED25519 SHA256:7u9cw0ldff1d3ptvtxvl0jz11l19qks7earx1n9i1db"
+        }
+      ],
+      "id": "LS-006",
+      "notes": ""
+    },
+    {
+      "rule": "repeated_failures",
+      "severity": "medium",
+      "title": "7 failed logins from 10.0.1.77",
+      "description": "7 failed logins, at least 5 within 10 minutes. Usernames: bob.",
+      "recommendation": "Confirm with the account owner if the source is internal; otherwise treat it as reconnaissance and block it.",
+      "src_ip": "10.0.1.77",
+      "user": "bob",
+      "first_seen": "2026-10-16T14:02:10.367452",
+      "last_seen": "2026-10-16T15:57:45.544441",
+      "count": 7,
+      "evidence": [
+        {
+          "line": 380,
+          "raw": "2026-10-16T14:02:10.367452+03:00 bastion-01 sshd[2869]: Failed password for bob from 10.0.1.77 port 56939 ssh2"
+        },
+        {
+          "line": 381,
+          "raw": "2026-10-16T14:03:41.350672+03:00 bastion-01 sshd[2876]: Failed password for bob from 10.0.1.77 port 47927 ssh2"
+        },
+        {
+          "line": 382,
+          "raw": "2026-10-16T14:04:43.926587+03:00 bastion-01 sshd[2882]: Failed password for bob from 10.0.1.77 port 23123 ssh2"
+        },
+        {
+          "line": 383,
+          "raw": "2026-10-16T14:06:19.385126+03:00 bastion-01 sshd[2891]: Failed password for bob from 10.0.1.77 port 32577 ssh2"
+        },
+        {
+          "line": 384,
+          "raw": "2026-10-16T14:07:51.366200+03:00 bastion-01 sshd[2895]: Failed password for bob from 10.0.1.77 port 54056 ssh2"
+        },
+        {
+          "line": 385,
+          "raw": "2026-10-16T14:08:56.931938+03:00 bastion-01 sshd[2896]: Failed password for bob from 10.0.1.77 port 14482 ssh2"
+        },
+        {
+          "line": 404,
+          "raw": "2026-10-16T15:57:45.544441+03:00 bastion-01 sshd[1628]: Failed password for bob from 10.0.1.77 port 11564 ssh2"
+        }
+      ],
+      "id": "LS-007",
+      "notes": ""
+    },
+    {
+      "rule": "untrusted_source",
+      "severity": "medium",
+      "title": "1 login(s) for dave from untrusted 203.0.113.9",
+      "description": "Source is outside the trusted networks (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).",
+      "recommendation": "Verify the source belongs to the user (VPN, home, travel). Unknown external sources with a successful login warrant credential rotation.",
+      "src_ip": "203.0.113.9",
+      "user": "dave",
+      "first_seen": "2026-10-17T02:17:21.969700",
+      "last_seen": "2026-10-17T02:17:21.969700",
+      "count": 1,
+      "evidence": [
+        {
+          "line": 435,
+          "raw": "2026-10-17T02:17:21.969700+03:00 bastion-01 sshd[2935]: Accepted password for dave from 203.0.113.9 port 39254 ssh2"
+        }
+      ],
+      "id": "LS-008",
+      "notes": ""
+    },
+    {
+      "rule": "off_hours_login",
+      "severity": "low",
+      "title": "1 off-hours login(s) for dave from 203.0.113.9",
+      "description": "Successful logins outside 07:00-19:00 on weekdays. Times: Sat 02:17.",
+      "recommendation": "Confirm the activity with the user or a change ticket. Root logins at night deserve a direct check of what was run.",
+      "src_ip": "203.0.113.9",
+      "user": "dave",
+      "first_seen": "2026-10-17T02:17:21.969700",
+      "last_seen": "2026-10-17T02:17:21.969700",
+      "count": 1,
+      "evidence": [
+        {
+          "line": 435,
+          "raw": "2026-10-17T02:17:21.969700+03:00 bastion-01 sshd[2935]: Accepted password for dave from 203.0.113.9 port 39254 ssh2"
+        }
+      ],
+      "id": "LS-009",
+      "notes": ""
+    },
+    {
+      "rule": "off_hours_login",
+      "severity": "low",
+      "title": "1 off-hours login(s) for alice from 10.0.1.20",
+      "description": "Successful logins outside 07:00-19:00 on weekdays. Times: Sat 10:30.",
+      "recommendation": "Confirm the activity with the user or a change ticket. Root logins at night deserve a direct check of what was run.",
+      "src_ip": "10.0.1.20",
+      "user": "alice",
+      "first_seen": "2026-10-17T10:30:15.904994",
+      "last_seen": "2026-10-17T10:30:15.904994",
+      "count": 1,
+      "evidence": [
+        {
+          "line": 451,
+          "raw": "2026-10-17T10:30:15.904994+03:00 bastion-01 sshd[2966]: Accepted publickey for alice from 10.0.1.20 port 18005 ssh2: ED25519 SHA256:7nfg07fb2i9rwm2ql6d0cxo5cuo78wijjpih1xk9huf"
+        }
+      ],
+      "id": "LS-010",
+      "notes": ""
+    }
+  ]
+}
