@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - name: Lint
+        run: ruff check .
+      - name: Tests
+        run: pytest
+      - name: Static security scan (bandit)
+        run: bandit -q -c pyproject.toml -r src
+      - name: Dependency vulnerabilities (pip-audit)
+        run: pip-audit
+      - name: Sample log is reproducible
+        run: python scripts/make_sample_log.py /tmp/sample.log && cmp /tmp/sample.log src/logsentinel/data/sample_auth.log
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t logsentinel .
+      - run: docker run --rm logsentinel logsentinel analyze /usr/local/lib/python3.12/site-packages/logsentinel/data/sample_auth.log
