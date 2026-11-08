@@ -5,13 +5,13 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import subprocess  # nosec B404: only launches streamlit with a fixed argv
+import subprocess  # nosec B404  # only launches streamlit with a fixed argv
 import sys
 from pathlib import Path
 
 from . import __version__
 from .detect import Config, run_all
-from .parser import parse_file
+from .parser import MAX_BYTES, parse_file
 from .report import severity_counts, to_json, to_markdown
 
 APP = Path(__file__).with_name("app.py")
@@ -24,11 +24,13 @@ def _parser() -> argparse.ArgumentParser:
 
     a = sub.add_parser("analyze", help="analyse an auth log, print findings, export reports")
     a.add_argument("logfile", type=Path, help="auth.log, secure, or a .gz rotation of one")
-    a.add_argument("--year", type=int, help="year for legacy 'Oct 15 08:12:33' timestamps (default: current)")
+    a.add_argument("--year", type=int,
+                   help="year of the first legacy 'Oct 15 08:12:33' line; later lines roll over at New Year "
+                        "(default: the latest year that keeps the log in the past)")
     a.add_argument("--report", type=Path, metavar="FILE.md", help="write a Markdown incident report")
     a.add_argument("--json", type=Path, metavar="FILE.json", help="write findings and evidence as JSON")
     a.add_argument("--notes", type=Path, metavar="FILE.json",
-                   help='analyst notes to merge into the reports, e.g. {"LS-001": "text"}')
+                   help='analyst notes keyed by finding key or id, e.g. {"LS-001": "text"}')
     d = Config()
     a.add_argument("--fail-threshold", type=int, default=d.fail_threshold, metavar="N",
                    help="failures from one IP inside the window (default %(default)s)")
@@ -66,13 +68,16 @@ def analyze(args: argparse.Namespace) -> int:
     cfg = _config(args)
     notes = json.loads(args.notes.read_text(encoding="utf-8")) if args.notes else {}
     if not isinstance(notes, dict):
-        raise ValueError("--notes must be a JSON object keyed by finding id")
+        raise ValueError("--notes must be a JSON object keyed by finding key or id")
     parsed = parse_file(args.logfile, args.year)
     findings = run_all(parsed.events, cfg)
+    unknown = set(notes) - {f.key for f in findings} - {f.id for f in findings}
+    if unknown:
+        print(f"warning: notes for {', '.join(sorted(unknown))} match no finding", file=sys.stderr)
     counts = severity_counts(findings)
     summary = ", ".join(f"{v} {k}" for k, v in counts.items() if v) or "none"
-    print(f"{parsed.source}: {parsed.lines} lines, {len(parsed.events)} auth events, "
-          f"{len(findings)} findings ({summary})")
+    print(f"{parsed.source}: {parsed.lines} lines, {len(parsed.events)} auth events "
+          f"({parsed.unparsed} unparsed, {parsed.ignored} other), {len(findings)} findings ({summary})")
     for f in findings:
         print(f"  {f.id}  {f.severity:<8} {f.rule:<23} {f.title}")
     if args.report:
@@ -89,9 +94,12 @@ def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.DEBUG if getattr(args, "verbose", False) else logging.WARNING,
                         format="%(levelname)s %(name)s: %(message)s")
     if args.command == "dashboard":
+        # set here, not only in .streamlit/config.toml, which Streamlit reads from the working directory
         cmd = [sys.executable, "-m", "streamlit", "run", str(APP),
-               "--server.address", args.host, "--server.port", str(args.port)]
-        return subprocess.call(cmd)  # nosec B603: fixed argv, no shell
+               "--server.address", args.host, "--server.port", str(args.port),
+               "--server.headless", "true", "--browser.gatherUsageStats", "false",
+               "--server.maxUploadSize", str(MAX_BYTES // 2**20)]
+        return subprocess.call(cmd)  # nosec B603  # fixed argv, no shell
     try:
         return analyze(args)
     except (OSError, ValueError) as e:

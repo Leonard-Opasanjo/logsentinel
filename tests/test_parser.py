@@ -1,9 +1,10 @@
 import gzip
-from datetime import datetime
+import tracemalloc
+from datetime import datetime, timedelta
 
 import pytest
 
-from logsentinel.parser import COLUMNS, MAX_LINE, parse_file, parse_lines, parse_text
+from logsentinel.parser import COLUMNS, MAX_LINE, MAX_REPEAT, parse_file, parse_lines, parse_text
 
 LEGACY_FAIL = "Oct  7 08:12:33 bastion-01 sshd[1234]: Failed password for invalid user admin from 203.0.113.45 port 50122 ssh2"
 ISO_OK = ("2026-10-15T08:12:33.123456+03:00 bastion-01 sshd[1235]: Accepted publickey for alice from 10.0.1.20 "
@@ -62,8 +63,81 @@ def test_gzip_and_explicit_year(tmp_path):
     assert p.source == "auth.log.1.gz" and p.events.timestamp[0].year == 2025
 
 
-def test_default_year_is_current():
-    assert parse_lines([LEGACY_FAIL]).events.timestamp[0].year == datetime.now().year
+def _legacy(t: datetime, msg: str = "Failed password for root from 203.0.113.45 port 1 ssh2") -> str:
+    return f"{t:%b} {t.day:2d} {t:%H:%M:%S} h sshd[1]: {msg}"
+
+
+def test_default_year_keeps_the_log_in_the_past():
+    past, future = datetime.now() - timedelta(days=2), datetime.now() + timedelta(days=3)
+    assert parse_lines([_legacy(past)]).events.timestamp[0].year == past.year
+    # a date later than today cannot be this year's: it is last year's
+    assert parse_lines([_legacy(future)]).events.timestamp[0].year == future.year - 1
+
+
+def test_legacy_year_rolls_over_at_new_year():
+    lines = [_legacy(datetime(2025, 12, 31, 23, 58)), _legacy(datetime(2025, 11, 30, 23, 59)),  # one month back is not New Year
+             _legacy(datetime(2026, 1, 1, 0, 1))]
+    assert [t.year for t in parse_lines(lines, year=2025).events.timestamp] == [2025, 2025, 2026]
+
+
+def test_utc_column_orders_across_a_dst_change():
+    lines = ["2026-10-25T01:55:00+01:00 h sshd[1]: Failed password for dave from 10.0.1.9 port 1 ssh2",
+             "2026-10-25T01:05:00+00:00 h sshd[2]: Accepted password for dave from 10.0.1.9 port 2 ssh2",
+             "2026-11-08T18:05:01+0300 h sshd[3]: Accepted password for dave from 10.0.1.9 port 3 ssh2"]  # journalctl
+    ev = parse_lines(lines).events
+    assert ev.timestamp.tolist() == [datetime(2026, 10, 25, 1, 55), datetime(2026, 10, 25, 1, 5),
+                                     datetime(2026, 11, 8, 18, 5, 1)]  # wall clock, for business hours
+    assert ev.utc.tolist() == [datetime(2026, 10, 25, 0, 55), datetime(2026, 10, 25, 1, 5),
+                               datetime(2026, 11, 8, 15, 5, 1)]
+
+
+def test_hostile_usernames_cannot_hide_or_move_the_source():
+    lines = [f"Oct  7 08:12:3{i} h sshd[1]: Failed password for invalid user {u} from 203.0.113.5 port 4444 ssh2"
+             for i, u in enumerate(["admin x", "a from 10.0.1.20 port 1", "root from 10.0.1.20 port 22 ssh2"])]
+    ev = parse_lines(lines, year=2026).events
+    assert len(ev) == 3 and set(ev.src_ip) == {"203.0.113.5"}
+    assert ev.user.tolist() == ["admin x", "a from 10.0.1.20 port 1", "root from 10.0.1.20 port 22 ssh2"]
+
+
+def test_message_repeated_counts_every_repetition():
+    lines = ["Oct  7 08:00:00 h sshd[7]: Failed password for dave from 10.0.1.9 port 5555 ssh2",
+             "Oct  7 08:00:04 h sshd[7]: message repeated 2 times: [ Failed password for dave from 10.0.1.9 port 5555 ssh2]",
+             "Oct  7 08:00:09 h sshd[8]: message repeated 99999 times: [ Failed password for dave from 10.0.1.9 port 6 ssh2]"]
+    p = parse_lines(lines, year=2026)
+    assert p.events.line_no.tolist() == [1, 2, 2] + [3] * MAX_REPEAT and p.ignored == 0
+
+
+def test_bad_month_is_unparsed_not_fatal():
+    p = parse_lines(["Xyz 15 08:12:33 h sshd[1]: Failed password for root from 1.2.3.4 port 22 ssh2", LEGACY_FAIL])
+    assert (p.unparsed, len(p.events)) == (1, 1)
+
+
+def test_damaged_gzip_is_a_clean_error(tmp_path):
+    good = gzip.compress((LEGACY_FAIL + "\n").encode() * 200)
+    for name, data in [("truncated.log.gz", good[: len(good) // 2]),
+                       ("corrupt.log.gz", good[:10] + b"garbage" * 20), ("plain.log.gz", b"not gzip at all")]:
+        (tmp_path / name).write_bytes(data)
+        with pytest.raises(ValueError, match="gzip"):
+            parse_file(tmp_path / name)
+
+
+def test_gzip_single_line_bomb_is_refused_without_inflating_it(tmp_path):
+    f = tmp_path / "bomb.log.gz"
+    f.write_bytes(gzip.compress(b"A" * (20 * 2**20)))  # 20 MB with no newline, about 20 KB compressed
+    tracemalloc.start()
+    with pytest.raises(ValueError, match="exceeds"):
+        parse_file(f, max_bytes=1000)
+    peak = tracemalloc.get_traced_memory()[1]
+    tracemalloc.stop()
+    assert peak < 2 * 2**20
+
+
+def test_line_numbers_match_the_file(tmp_path):
+    f = tmp_path / "auth.log"
+    f.write_bytes(b"Oct  7 08:00:00 h CRON[1]: form \x0c feed\nOct  7 08:00:01 h app[2]: lone\rcr and \xe2\x80\xa8 LS\n"
+                  + LEGACY_FAIL.encode() + b"\n")
+    assert parse_file(f, 2026).events.line_no.tolist() == [3]  # the line grep -n reports
+    assert parse_text(f.read_bytes().decode(), 2026).events.line_no.tolist() == [3]
 
 
 def test_empty_invalid_username():

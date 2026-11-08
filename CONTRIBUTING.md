@@ -23,8 +23,8 @@ pip-audit
 ```
 
 If you touched `scripts/make_sample_log.py`, regenerate the bundled log with `python scripts/make_sample_log.py`
-and update the expected counts in `tests/test_cli.py` and `tests/test_app.py`. CI checks that the committed log
-matches the generator.
+and update the expected counts in `tests/test_cli.py`, `tests/test_app.py` and `tests/test_detect.py`. CI checks
+that the committed log matches the generator.
 
 ## Adding a detection rule
 

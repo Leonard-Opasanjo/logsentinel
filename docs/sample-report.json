@@ -1,6 +1,6 @@
 {
   "tool": "logsentinel",
-  "generated": "2026-10-19T12:25:24+00:00",
+  "generated": "2026-11-08T15:32:57+00:00",
   "source": "sample_auth.log",
   "stats": {
     "lines": 467,
@@ -74,13 +74,14 @@
         }
       ],
       "id": "LS-001",
+      "key": "success_after_failures/10.0.1.77/bob/2026-10-16T14:02:10",
       "notes": ""
     },
     {
       "rule": "success_after_failures",
       "severity": "critical",
       "title": "Login for dave from 203.0.113.9 after 4 failures",
-      "description": "password login for dave succeeded at 2026-10-17 02:17:21 after 4 failed attempts from the same source within 30 minutes (usernames tried: dave).",
+      "description": "password login for dave succeeded at 2026-10-17 02:17:21 after 4 failed attempts from the same source within 30 minutes (usernames tried: dave). dave then ran sudo 2 time(s), shown in the evidence.",
       "recommendation": "Treat as a possible account compromise: contact the user, review what the session ran (sudo entries, shell history), rotate the credential and consider isolating the host.",
       "src_ip": "203.0.113.9",
       "user": "dave",
@@ -107,9 +108,18 @@
         {
           "line": 435,
           "raw": "2026-10-17T02:17:21.969700+03:00 bastion-01 sshd[2935]: Accepted password for dave from 203.0.113.9 port 39254 ssh2"
+        },
+        {
+          "line": 438,
+          "raw": "2026-10-17T02:19:03.490599+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/cat /etc/shadow"
+        },
+        {
+          "line": 439,
+          "raw": "2026-10-17T02:23:48.812057+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/tar czf /tmp/.cache.tgz /home /etc"
         }
       ],
       "id": "LS-002",
+      "key": "success_after_failures/203.0.113.9/dave/2026-10-17T02:11:04",
       "notes": ""
     },
     {
@@ -686,6 +696,7 @@
         }
       ],
       "id": "LS-003",
+      "key": "brute_force/203.0.113.45/admin, root/2026-10-15T03:12:04",
       "notes": ""
     },
     {
@@ -846,6 +857,7 @@
         }
       ],
       "id": "LS-004",
+      "key": "password_spray/198.51.100.23/admin, deploy, ftp, git, guest (+7 more)/2026-10-16T10:00:53",
       "notes": ""
     },
     {
@@ -866,6 +878,7 @@
         }
       ],
       "id": "LS-005",
+      "key": "off_hours_login/192.168.10.5/root/2026-10-17T04:40:07",
       "notes": ""
     },
     {
@@ -886,6 +899,7 @@
         }
       ],
       "id": "LS-006",
+      "key": "untrusted_source/198.51.100.77/erin/2026-10-15T11:30:44",
       "notes": ""
     },
     {
@@ -930,6 +944,7 @@
         }
       ],
       "id": "LS-007",
+      "key": "repeated_failures/10.0.1.77/bob/2026-10-16T14:02:10",
       "notes": ""
     },
     {
@@ -950,6 +965,7 @@
         }
       ],
       "id": "LS-008",
+      "key": "untrusted_source/203.0.113.9/dave/2026-10-17T02:17:21",
       "notes": ""
     },
     {
@@ -970,6 +986,7 @@
         }
       ],
       "id": "LS-009",
+      "key": "off_hours_login/203.0.113.9/dave/2026-10-17T02:17:21",
       "notes": ""
     },
     {
@@ -990,6 +1007,7 @@
         }
       ],
       "id": "LS-010",
+      "key": "off_hours_login/10.0.1.20/alice/2026-10-17T10:30:15",
       "notes": ""
     }
   ]

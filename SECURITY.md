@@ -16,12 +16,17 @@ You should hear back within seven days.
 LogSentinel reads log files that an attacker can influence. Anyone who can attempt an SSH login can put a chosen
 username into `auth.log`. The parser and the reports are therefore written to treat every byte of the log as hostile:
 
-- Lines are truncated at 4 KiB and files are refused above 50 MB, including after gzip decompression.
+- Lines are truncated at 4 KiB and files are refused above 50 MB, including after gzip decompression, which
+  stops at the cap instead of inflating the whole file.
+- The sshd patterns read the source address from the end of the line, so a username that contains
+  `from X port N` cannot change it, and a username with spaces cannot hide the attempt.
 - Undecodable bytes are replaced; nothing from a log is evaluated, formatted as a template or passed to a shell.
 - Log-derived values are sanitised before being placed in the Markdown report, and evidence blocks strip backticks
   so a crafted line cannot close the code fence.
-- The dashboard renders log-derived values through Streamlit components, which escape HTML.
-- The tool makes no outbound network connections.
+- The dashboard shows log-derived descriptions as plain text and sanitises the log values it places in
+  Markdown, so a crafted username cannot add a link, or an image that would load from someone else's server.
+- The tool makes no outbound network connections. `logsentinel dashboard` turns Streamlit's usage statistics off
+  on the command line, so this does not depend on the directory it is started from.
 
 Out of scope, by design:
 

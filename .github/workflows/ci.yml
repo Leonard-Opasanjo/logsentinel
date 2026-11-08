@@ -16,8 +16,8 @@ jobs:
       matrix:
         python: ["3.11", "3.12", "3.13"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python }}
           cache: pip
@@ -33,9 +33,20 @@ jobs:
       - name: Sample log is reproducible
         run: python scripts/make_sample_log.py /tmp/sample.log && cmp /tmp/sample.log src/logsentinel/data/sample_auth.log
 
+  # The SecureFlow pipeline from the sibling project: Bandit, Semgrep, Gitleaks and pip-audit,
+  # merged into one report, published to code scanning, gated at high.
+  security:
+    uses: Leonard-Opasanjo/secureflow-devsecops/.github/workflows/secureflow.yml@main
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: write
+    with:
+      fail-on: high
+
   docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: docker build -t logsentinel .
       - run: docker run --rm logsentinel logsentinel analyze /usr/local/lib/python3.12/site-packages/logsentinel/data/sample_auth.log

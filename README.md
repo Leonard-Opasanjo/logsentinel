@@ -59,8 +59,8 @@ It is not a replacement for a SIEM, and it does not try to be.
 The project set out to meet six concrete objectives. Each one is checked by the test suite or the CI pipeline.
 
 1. **Parse real authentication logs reliably.** Accept both syslog timestamp styles that Linux distributions
-   use, the `sshd` and `sshd-session` process names, gzip-rotated files, and malformed or hostile input, without
-   crashing and without executing anything found in the log.
+   use, the `sshd` and `sshd-session` process names, rsyslog's folded `message repeated` lines, gzip-rotated
+   files, and malformed or hostile input, without crashing and without executing anything found in the log.
 2. **Detect the attack patterns that matter most on an SSH host.** Repeated failures, brute force, password
    spraying, a success that follows failures, off-hours access and access from untrusted networks. Each pattern
    is a separate, documented rule with a configurable threshold.
@@ -95,8 +95,10 @@ Oct 15 03:12:04 bastion-01 sshd[1431]: Failed password for root from 203.0.113.4
 2026-10-15T03:12:04.312884+03:00 bastion-01 sshd[1431]: Failed password for root from 203.0.113.45 port 51152 ssh2
 ```
 
-The first is the traditional format. It has no year, which is why LogSentinel takes a `--year` option. The second
-is RFC 3339 with microseconds and a UTC offset, the default on current Debian. LogSentinel reads both.
+The first is the traditional format. It has no year: LogSentinel assumes the latest year that keeps the log in
+the past, moves to the next year when the months go back past New Year, and takes a `--year` option to set the
+year of the first line. The second is RFC 3339 with microseconds and a UTC offset, the default on current Debian.
+LogSentinel reads both, and the `+0300` offsets that older `journalctl -o short-iso` prints.
 
 The messages that matter for authentication come from two processes:
 
@@ -106,6 +108,7 @@ The messages that matter for authentication come from two processes:
 | `sshd` | `Failed password for invalid user admin from 203.0.113.45 port 50122 ssh2` | attempt against an account that does not exist |
 | `sshd` | `Accepted publickey for alice from 10.0.1.20 port 51000 ssh2: ED25519 SHA256:...` | successful login with a key |
 | `sshd` | `Accepted password for bob from 10.0.1.77 port 27564 ssh2` | successful login with a password |
+| `sshd` | `message repeated 2 times: [ Failed password for root from 203.0.113.45 port 50122 ssh2]` | rsyslog's shorthand for identical lines (on by default on Ubuntu); counted once per repetition, up to 20 |
 | `sudo` | `    alice : TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/apt update` | a command run as root |
 | `sudo` | `    carol : 3 incorrect password attempts ; TTY=pts/1 ; ... ; COMMAND=/bin/bash` | sudo refused |
 
@@ -180,6 +183,9 @@ preceding `--lookback` minutes (default 30). The count of three is the `success_
 fixed in this version. Failures are only counted once: after a success, the next success from the same address
 starts counting from zero.
 
+**Evidence.** Besides the failures and the success, the finding cites the same user's `sudo` lines in the
+look-back window after the login, at most ten, so it shows what the session did next.
+
 **Why it matters.** This is the single most important pattern in an authentication log. Failures followed by
 success is what a guessed password looks like, what a credential-stuffing hit looks like, and what a bruteforcer
 that finally succeeded looks like. It is always critical, because the cost of ignoring a real one is a
@@ -215,7 +221,8 @@ else is either a remote worker you did not know about or an attacker with a work
 want to know.
 
 **Tuning.** `--trusted-network CIDR`, repeatable. Replacing the defaults with your office and VPN ranges makes
-this rule precise. Adding `0.0.0.0/0` switches it off.
+this rule precise. Adding `0.0.0.0/0` and `::/0` switches it off for every IP source; a source that sshd logged
+as a host name is still flagged.
 
 ## Severity model
 
@@ -227,8 +234,9 @@ this rule precise. Adding `0.0.0.0/0` switches it off.
 | low | worth recording, rarely worth acting on alone | note it; it raises the weight of any other finding for the same user or address |
 
 Findings are sorted by severity, then by first-seen time, then by rule and source address, and numbered
-`LS-001`, `LS-002` and so on. The numbering is deterministic for a given input and configuration, which is what
-lets a notes file written against one run still apply to the next.
+`LS-001`, `LS-002` and so on. The numbering is deterministic for a given input and configuration, but it changes
+when the thresholds change or the log grows. Each finding therefore also carries a `key` made of its rule, source,
+user and first-seen time, and notes are matched by key first and by number second.
 
 ## Anatomy of a finding
 
@@ -237,6 +245,7 @@ Every finding, in the dashboard, the Markdown report and the JSON file, carries 
 | Field | Content |
 |---|---|
 | `id` | `LS-001` style identifier, assigned after sorting |
+| `key` | `rule/source/user/first-seen` fingerprint that survives renumbering; notes are matched by it |
 | `rule` | one of the six rule names |
 | `severity` | critical, high, medium or low |
 | `title` | one line a person can read in a table: `Login for dave from 203.0.113.9 after 4 failures` |
@@ -244,7 +253,7 @@ Every finding, in the dashboard, the Markdown report and the JSON file, carries 
 | `recommendation` | the first steps an analyst should take for this kind of finding |
 | `src_ip`, `user` | the address and account concerned (user may be a list for spray findings) |
 | `first_seen`, `last_seen`, `count` | the time span and number of events behind the finding |
-| `evidence` | the line numbers in the source log; the reports expand them to the full lines |
+| `evidence` | the line numbers in the source log, plus the user's later `sudo` lines for a success after failures; the reports expand them to the full lines |
 | `notes` | the analyst's own text, if any was supplied |
 
 ## Walkthrough: investigating the sample log
@@ -254,7 +263,7 @@ six staff accounts. Running the analyser with defaults gives:
 
 ```
 $ logsentinel analyze src/logsentinel/data/sample_auth.log --report docs/sample-report.md
-sample_auth.log: 467 lines, 280 auth events, 10 findings (2 critical, 3 high, 3 medium, 2 low)
+sample_auth.log: 467 lines, 280 auth events (0 unparsed, 187 other), 10 findings (2 critical, 3 high, 3 medium, 2 low)
   LS-001  critical success_after_failures  Login for bob from 10.0.1.77 after 6 failures
   LS-002  critical success_after_failures  Login for dave from 203.0.113.9 after 4 failures
   LS-003  high     brute_force             140 failed logins from 203.0.113.45
@@ -272,7 +281,7 @@ Here is how an analyst would read that list.
 
 **LS-002, LS-008 and LS-009 are one incident.** `dave` logged in with a password at 02:17 on Saturday from
 `203.0.113.9`, a public address, after four failures in the preceding six minutes. Three rules fired on the same
-event. Opening the evidence shows what the session did next: `sudo cat /etc/shadow` two minutes later, then
+event. The evidence of LS-002 shows what the session did next: `sudo cat /etc/shadow` two minutes later, then
 `sudo tar czf /tmp/.cache.tgz /home /etc`. That is an attacker reading password hashes and packaging the host's
 data. This is the finding that justifies the whole exercise. Action: disable the account, rotate every credential
 on the host, preserve the log, and find out how the password was obtained.
@@ -326,7 +335,7 @@ tests/                       parser, every rule, reports, CLI, dashboard
 ```
 
 The pipeline is three pure functions in a row. `parse_file` turns text into a DataFrame with one row per
-authentication event and the columns `line_no`, `timestamp`, `host`, `process`, `pid`, `event`, `user`,
+authentication event and the columns `line_no`, `timestamp`, `utc`, `host`, `process`, `pid`, `event`, `user`,
 `src_ip`, `method`, `invalid` and `raw`. `run_all` applies each rule in `RULES` to that frame with a `Config` and
 returns sorted, numbered findings. `to_markdown` and `to_json` turn the findings plus the analyst's notes into
 documents. The CLI and the dashboard are thin layers over those three calls, which is why they always agree.
@@ -343,9 +352,10 @@ Design decisions worth knowing about:
   CIDRs when it is constructed, so the CLI and the dashboard cannot disagree about what is allowed.
 - **Findings carry line numbers, not copies of lines.** The report looks the lines up when it is written. That
   keeps findings small and keeps the evidence tied to the original file.
-- **Wall-clock time.** Timestamps are read as the host's local time and their UTC offset is dropped rather than
-  converted. The business-hours rule is about when people at that host work, and that is what the host's clock
-  records.
+- **Wall-clock time for people, UTC for order.** `timestamp` is the host's local time with the offset dropped,
+  because the business-hours rule is about when people at that host work. `utc` applies the offset, and the
+  rules use it for ordering and time windows, so a daylight-saving change cannot put a success before the
+  failures that led to it.
 - **No network.** Enrichment (GeoIP, reputation feeds) is on the roadmap as a local-database feature only. A
   triage tool that phones home with the addresses in your logs is itself a data leak.
 
@@ -383,15 +393,16 @@ logsentinel dashboard [--host HOST] [--port PORT]
 logsentinel --version
 ```
 
-`analyze` prints a one-line summary and one line per finding, then writes whatever exports were requested.
+`analyze` prints a one-line summary (lines, auth events, unparsed and other lines, findings) and one line per
+finding, then writes whatever exports were requested.
 
 | Option | Default | Effect |
 |---|---|---|
 | `LOGFILE` | | `auth.log`, `secure`, or a `.gz` rotation of either |
-| `--year YYYY` | current year | year to apply to legacy `Oct 15 08:12:33` timestamps |
+| `--year YYYY` | latest year that keeps the log in the past | year of the first legacy `Oct 15 08:12:33` line; later lines move to the next year at New Year |
 | `--report FILE.md` | | write the Markdown incident report |
 | `--json FILE.json` | | write findings, evidence and settings as JSON |
-| `--notes FILE.json` | | merge analyst notes, a JSON object keyed by finding id |
+| `--notes FILE.json` | | merge analyst notes, a JSON object keyed by finding `key` or `id`; ids that match nothing are reported on stderr |
 | `--fail-threshold N` | 5 | failures from one address inside the window for `repeated_failures` |
 | `--brute-threshold N` | 20 | failures inside the window for `brute_force` |
 | `--spray-users N` | 5 | distinct usernames from one address for `password_spray` |
@@ -401,8 +412,8 @@ logsentinel --version
 | `--trusted-network CIDR` | RFC 1918 | repeatable; replaces the default list |
 | `-v` | | debug logging to stderr |
 
-Exit codes: `0` on success, `2` when the file cannot be read, is too large, or an option is invalid. The
-findings themselves do not affect the exit code in this version.
+Exit codes: `0` on success, `2` when the file cannot be read, is too large, is a damaged gzip, or an option is
+invalid. The findings themselves do not affect the exit code in this version.
 
 Examples:
 
@@ -421,6 +432,10 @@ logsentinel analyze auth.log --report incident.md --json incident.json --notes n
 logsentinel analyze auth.log --fail-threshold 2 --brute-threshold 5 --window 60 --business-hours 8-18
 ```
 
+A note keyed by `LS-001` follows whatever finding gets that number. To keep a note on the same finding when the
+thresholds or the log change, key it by the finding's `key` from the JSON export, for example
+`{"success_after_failures/10.0.1.77/bob/2026-10-16T14:02:10": "..."}`.
+
 ### Dashboard
 
 ```bash
@@ -428,12 +443,17 @@ logsentinel dashboard              # http://localhost:8501
 logsentinel dashboard --port 9000
 ```
 
-The sidebar selects the bundled sample or an uploaded file (up to 50 MB, `.log`, `.txt` or `.gz`), the year for
-legacy timestamps, and every threshold as a slider or text box. The main area shows the headline counts, a
-timeline of failed, accepted, sudo and sudo-failed events at 15-minute, hourly, 6-hourly or daily resolution, the
-findings table, and an investigation panel for the selected finding with its evidence and a notes box. The two
-download buttons produce the same Markdown and JSON as the CLI, with the notes typed in the session included. An
-expander at the bottom lists every parsed event for ad-hoc filtering.
+The sidebar selects the bundled sample or an uploaded file (up to 50 MB, any name, `.gz` is decompressed), the
+year of the first legacy timestamp (empty means automatic), and every threshold as a slider or text box. The main
+area shows the headline counts, a timeline of failed, accepted, sudo and sudo-failed events at 15-minute, hourly,
+6-hourly or daily resolution, the findings table, and an investigation panel for the selected finding with its
+evidence and a notes box. Notes stay with their finding while you move between findings or change thresholds. The
+two download buttons produce the same Markdown and JSON as the CLI, with the notes typed in the session included.
+An expander at the bottom lists every parsed event, raw line included, for ad-hoc filtering.
+
+`logsentinel dashboard` passes headless mode, `--browser.gatherUsageStats false` and the 50 MB upload limit to
+Streamlit on the command line, so it behaves the same whichever directory you start it from. Open the URL it
+prints.
 
 The dashboard binds to `localhost` by default and has no login of its own. See
 [Security assumptions](#security-assumptions) before putting it anywhere else.
@@ -447,7 +467,7 @@ The report is meant to be pasted into a ticket or an incident record as it is. I
 1. Header: source file, generation time (UTC), line counts (read, auth events, unparsed, other) and the period
    the events cover in the host's clock.
 2. Summary: a table of findings per severity.
-3. Findings: one section per finding with its id, severity and title as the heading, then rule, source, user,
+3. Findings: one section per finding with its id, severity and title as the heading, then rule, key, source, user,
    time span and event count, the description, the recommendation, the analyst notes (or `_none_`), and the
    first ten evidence lines in a code block with their line numbers.
 4. Timeline: an hourly table of event counts by type.
@@ -481,6 +501,7 @@ block or insert a heading.
       "last_seen": "2026-10-16T14:10:12.467159",
       "count": 7,
       "evidence": [{"line": 380, "raw": "2026-10-16T14:02:10.367452+03:00 bastion-01 sshd[2869]: Failed password for bob ..."}],
+      "key": "success_after_failures/10.0.1.77/bob/2026-10-16T14:02:10",
       "notes": ""
     }
   ]
@@ -517,7 +538,7 @@ python scripts/make_sample_log.py /tmp/my.log     # writes elsewhere
 
 ```bash
 ruff check .                              # lint and import order
-pytest                                    # 40 tests
+pytest                                    # 58 tests
 bandit -q -c pyproject.toml -r src        # static security scan of the package
 pip-audit                                 # known vulnerabilities in the installed dependencies
 python scripts/make_sample_log.py /tmp/s.log && cmp /tmp/s.log src/logsentinel/data/sample_auth.log
@@ -526,18 +547,27 @@ python scripts/make_sample_log.py /tmp/s.log && cmp /tmp/s.log src/logsentinel/d
 The test suite covers:
 
 - **Parser:** both timestamp formats, `sshd-session`, the invalid-user flag, empty usernames, sudo success and
-  failure, noise and garbage lines, impossible dates, line truncation, the size cap, gzip input, non-UTF-8
-  bytes, and the schema of an empty result.
+  failure, noise and garbage lines, impossible dates, an unknown month, line truncation, the size cap, gzip
+  input, damaged gzip, a gzip that inflates to one huge line, non-UTF-8 bytes, usernames that contain spaces or a
+  fake `from X port N`, folded `message repeated` lines, New Year roll-over and the default year, UTC order across
+  a daylight-saving change, offsets without a colon, line numbers that match `grep -n`, and the schema of an
+  empty result.
 - **Each rule:** fires at the threshold and not one below it, slow failures that never form a burst, spray
   taking precedence over count, one finding per address, the look-back and once-only counting for success after
-  failures, business-hour boundaries and weekends, root severity, trusted-network overrides, IPv6 and non-IP
-  sources, ordering and numbering, empty input, and `Config` validation.
+  failures, the same rule at New Year, across a daylight-saving change and with folded lines, the sudo lines it
+  cites, business-hour boundaries and weekends, root severity, trusted-network overrides including `0.0.0.0/0`
+  with `::/0`, IPv6 and non-IP sources, ordering and numbering, empty input, `Config` validation, and the
+  sample's ten findings, which must not change.
 - **Reports:** the Markdown structure, closed evidence fences under a hostile username, notes placement, the JSON
   schema, and the timeline.
-- **CLI:** the full sample run with notes merged into both exports, threshold flags changing the result, and
-  the exit code for a missing file, a malformed option and a malformed notes file.
+- **CLI:** the full sample run with notes merged into both exports, the summary line, the sudo evidence in the
+  report, notes matched by key after renumbering with a warning for unknown ids, threshold flags changing the
+  result, the exit code for a missing file, a damaged gzip, a malformed option and a malformed notes file, and the
+  telemetry and upload flags passed to Streamlit.
 - **Dashboard:** rendered through Streamlit's `AppTest` with the sample, checking the headline metrics, the
-  finding selector and that a typed note survives a rerun, plus the error shown for an invalid CIDR.
+  finding selector and that a typed note survives switching to another finding and back, plus the error shown
+  for an invalid CIDR, an uploader that accepts any file name, and hostile usernames shown as plain text rather
+  than Markdown.
 
 GitHub Actions runs the same five commands on Python 3.11, 3.12 and 3.13, then builds the Docker image and runs
 the CLI inside it. The dependency audit is meant to turn the build red when a dependency gets a published
@@ -547,16 +577,21 @@ old `setuptools` that the audit would otherwise flag.
 ## Security assumptions
 
 - **Log files are hostile input.** Anyone who can attempt an SSH login can put a chosen string into the
-  username field of `auth.log`. Lines are capped at 4 KiB, files at 50 MB (also after gzip decompression),
-  undecodable bytes are replaced, and nothing from a log is evaluated, templated or passed to a shell.
+  username field of `auth.log`. Lines are capped at 4 KiB, files at 50 MB (gzip decompression stops at the
+  cap), undecodable bytes are replaced, and nothing from a log is evaluated, templated or passed to a shell. The
+  sshd patterns read the source address from the end of the line, so a username containing `from X port N`
+  cannot change it.
 - **Report output is sanitised.** Log-derived strings are cleaned before they go into the Markdown, evidence
-  blocks strip backticks, and the dashboard renders log values through Streamlit components, which escape HTML.
-- **No network access.** No reputation lookups, no GeoIP web services, no telemetry (`gatherUsageStats` is off
-  in the bundled Streamlit configuration).
+  blocks strip backticks, and the dashboard shows descriptions as plain text and sanitises the log values it
+  puts in Markdown, so a crafted username cannot add a link, or an image that would load from an attacker's
+  server.
+- **No network access.** No reputation lookups, no GeoIP web services, no telemetry: `logsentinel dashboard`
+  passes `--browser.gatherUsageStats false` to Streamlit, and the bundled `.streamlit/config.toml` sets the same
+  when you run `streamlit run` from the repository root.
 - **The dashboard has no authentication.** It binds to `localhost`. To share it with a team, put it behind a
-  reverse proxy that handles login, and remember that uploaded logs sit in the server process's memory for the
-  session. The Docker image binds to all interfaces inside the container because it must; publish the port only
-  where you intend.
+  reverse proxy that handles login, and remember that the parsed results of the last four uploads stay in the
+  server process's memory, shared by every session, until they are evicted or the process restarts. The Docker
+  image binds to all interfaces inside the container because it must; publish the port only where you intend.
 - **Least privilege in the container.** The image runs as an unprivileged user and installs nothing beyond the
   package and its dependencies.
 - **Reporting a vulnerability:** see [SECURITY.md](SECURITY.md).
@@ -565,11 +600,15 @@ old `setuptools` that the audit would otherwise flag.
 
 - Only `sshd` and `sudo` events are parsed. PAM-only lines, `su`, `login`, console logins and journald's binary
   journal are not. Export the journal with `journalctl -o short-iso` and the sshd lines will parse.
-- Legacy syslog timestamps have no year; one year is applied to the whole file. A file that spans New Year is
-  misdated on one side of it.
-- Timestamps are the host's wall-clock time. Offsets are dropped, not converted, so the business-hours rule
-  reflects where the host is, not where you are, and logs from hosts in different zones should be analysed
-  separately.
+- Legacy syslog timestamps have no year. LogSentinel moves to the next year when the month goes back by more
+  than one (December to January) and otherwise assumes the latest year that keeps the log in the past. A file
+  with a gap of a year or more, or one assembled out of order, can still be misdated; set `--year`.
+- The business-hours rule uses the host's wall-clock time, so it reflects where the host is, not where you are.
+  Ordering and the time windows use UTC when the line carries an offset. Legacy lines carry none, so around a
+  daylight-saving change in a legacy log the windows can be off by an hour.
+- On a host that only accepts keys, scanners never reach a password prompt. Their attempts appear as
+  `Invalid user ...` and `Connection closed by invalid user ...` lines, which are not counted, so brute-force
+  and spray findings will be rare there.
 - Weekends are always treated as off-hours. There is no flag for organisations that work Saturdays.
 - Detection is threshold-based. The defaults suit a typical internet-facing host and were tuned on the synthetic
   sample. A busy jump host, or a NAT gateway that puts many users behind one address, will need the thresholds

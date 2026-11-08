@@ -16,9 +16,19 @@ MAX_EVIDENCE = 10
 _UNSAFE = re.compile(r"[^\w .,:@/()+-]")
 
 
-def _safe(value: object) -> str:
-    """Replace characters that could break Markdown structure in log-derived text."""
+def md_safe(value: object) -> str:
+    """Replace characters that could break Markdown structure, or add links and images, in log-derived text."""
     return _UNSAFE.sub("?", str(value))
+
+
+def raw_lines(ev: pd.DataFrame) -> pd.Series:
+    """Raw log line by line number (a folded "message repeated" line appears once per repetition in ev)."""
+    return ev.drop_duplicates("line_no").set_index("line_no").raw
+
+
+def note_for(f: Finding, notes: dict) -> str:
+    """The analyst note for a finding, looked up by its stable key first and by its LS-number second."""
+    return str(notes.get(f.key) or notes.get(f.id) or "")
 
 
 def timeline(ev: pd.DataFrame, freq: str = "1h") -> pd.DataFrame:
@@ -41,11 +51,11 @@ def to_markdown(parsed: ParsedLog, findings: list[Finding], cfg: Config,
     notes = notes or {}
     generated = generated or datetime.now(UTC)
     ev = parsed.events
-    raw = ev.set_index("line_no").raw
+    raw = raw_lines(ev)
     counts = severity_counts(findings)
     lines = [
         "# LogSentinel incident report", "",
-        f"- Source: `{_safe(parsed.source)}`",
+        f"- Source: `{md_safe(parsed.source)}`",
         f"- Generated: {generated:%Y-%m-%d %H:%M} UTC",
         f"- Lines read: {parsed.lines} (auth events {len(ev)}, unparsed {parsed.unparsed}, other {parsed.ignored})",
     ]
@@ -59,14 +69,14 @@ def to_markdown(parsed: ParsedLog, findings: list[Finding], cfg: Config,
         lines.append("No findings at the current thresholds.")
     for f in findings:
         lines += [
-            f"### {f.id} · {f.severity.upper()} · {_safe(f.title)}", "",
-            f"- Rule: `{f.rule}`",
-            f"- Source IP: `{_safe(f.src_ip)}` · User: `{_safe(f.user)}`",
+            f"### {f.id} · {f.severity.upper()} · {md_safe(f.title)}", "",
+            f"- Rule: `{f.rule}` · Key: `{md_safe(f.key)}`",
+            f"- Source IP: `{md_safe(f.src_ip)}` · User: `{md_safe(f.user)}`",
             f"- First seen: {f.first_seen:%Y-%m-%d %H:%M:%S} · Last seen: {f.last_seen:%Y-%m-%d %H:%M:%S} "
             f"· Events: {f.count}", "",
-            _safe(f.description), "",
+            md_safe(f.description), "",
             f"**Recommendation:** {f.recommendation}", "",
-            f"**Analyst notes:** {notes.get(f.id, '').strip() or '_none_'}", "",
+            f"**Analyst notes:** {note_for(f, notes).strip() or '_none_'}", "",
             f"Evidence ({min(len(f.evidence), MAX_EVIDENCE)} of {len(f.evidence)} lines):", "", "```text",
             *(e.replace("`", "'") for e in _evidence(f, raw)), "```", "",
         ]
@@ -86,7 +96,7 @@ def to_json(parsed: ParsedLog, findings: list[Finding], cfg: Config,
             notes: dict[str, str] | None = None, generated: datetime | None = None) -> str:
     notes = notes or {}
     generated = generated or datetime.now(UTC)
-    raw = parsed.events.set_index("line_no").raw
+    raw = raw_lines(parsed.events)
     doc = {
         "tool": "logsentinel",
         "generated": generated.isoformat(timespec="seconds"),
@@ -100,7 +110,7 @@ def to_json(parsed: ParsedLog, findings: list[Finding], cfg: Config,
             "first_seen": f.first_seen.isoformat(),
             "last_seen": f.last_seen.isoformat(),
             "evidence": [{"line": n, "raw": raw[n]} for n in f.evidence],
-            "notes": notes.get(f.id, ""),
+            "notes": note_for(f, notes),
         } for f in findings],
     }
     return json.dumps(doc, indent=2, default=str)

@@ -1,7 +1,7 @@
 # LogSentinel incident report
 
 - Source: `sample_auth.log`
-- Generated: 2026-10-19 12:25 UTC
+- Generated: 2026-11-08 15:32 UTC
 - Lines read: 467 (auth events 280, unparsed 0, other 187)
 - Period: 2026-10-15 03:12 to 2026-10-17 10:41 (host clock)
 
@@ -18,7 +18,7 @@
 
 ### LS-001 · CRITICAL · Login for bob from 10.0.1.77 after 6 failures
 
-- Rule: `success_after_failures`
+- Rule: `success_after_failures` · Key: `success_after_failures/10.0.1.77/bob/2026-10-16T14:02:10`
 - Source IP: `10.0.1.77` · User: `bob`
 - First seen: 2026-10-16 14:02:10 · Last seen: 2026-10-16 14:10:12 · Events: 7
 
@@ -42,17 +42,17 @@ Evidence (7 of 7 lines):
 
 ### LS-002 · CRITICAL · Login for dave from 203.0.113.9 after 4 failures
 
-- Rule: `success_after_failures`
+- Rule: `success_after_failures` · Key: `success_after_failures/203.0.113.9/dave/2026-10-17T02:11:04`
 - Source IP: `203.0.113.9` · User: `dave`
 - First seen: 2026-10-17 02:11:04 · Last seen: 2026-10-17 02:17:21 · Events: 5
 
-password login for dave succeeded at 2026-10-17 02:17:21 after 4 failed attempts from the same source within 30 minutes (usernames tried: dave).
+password login for dave succeeded at 2026-10-17 02:17:21 after 4 failed attempts from the same source within 30 minutes (usernames tried: dave). dave then ran sudo 2 time(s), shown in the evidence.
 
 **Recommendation:** Treat as a possible account compromise: contact the user, review what the session ran (sudo entries, shell history), rotate the credential and consider isolating the host.
 
 **Analyst notes:** _none_
 
-Evidence (5 of 5 lines):
+Evidence (7 of 7 lines):
 
 ```text
 430: 2026-10-17T02:11:04.150800+03:00 bastion-01 sshd[2911]: Failed password for dave from 203.0.113.9 port 12094 ssh2
@@ -60,11 +60,13 @@ Evidence (5 of 5 lines):
 432: 2026-10-17T02:14:12.690864+03:00 bastion-01 sshd[2925]: Failed password for dave from 203.0.113.9 port 48646 ssh2
 433: 2026-10-17T02:15:55.077070+03:00 bastion-01 sshd[2931]: Failed password for dave from 203.0.113.9 port 62459 ssh2
 435: 2026-10-17T02:17:21.969700+03:00 bastion-01 sshd[2935]: Accepted password for dave from 203.0.113.9 port 39254 ssh2
+438: 2026-10-17T02:19:03.490599+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/cat /etc/shadow
+439: 2026-10-17T02:23:48.812057+03:00 bastion-01 sudo:     dave : TTY=pts/2 ; PWD=/home/dave ; USER=root ; COMMAND=/usr/bin/tar czf /tmp/.cache.tgz /home /etc
 ```
 
 ### LS-003 · HIGH · 140 failed logins from 203.0.113.45
 
-- Rule: `brute_force`
+- Rule: `brute_force` · Key: `brute_force/203.0.113.45/admin, root/2026-10-15T03:12:04`
 - Source IP: `203.0.113.45` · User: `admin, root`
 - First seen: 2026-10-15 03:12:04 · Last seen: 2026-10-15 03:19:09 · Events: 140
 
@@ -91,7 +93,7 @@ Evidence (10 of 140 lines):
 
 ### LS-004 · HIGH · 36 failed logins from 198.51.100.23
 
-- Rule: `password_spray`
+- Rule: `password_spray` · Key: `password_spray/198.51.100.23/admin, deploy, ftp, git, guest (+7 more)/2026-10-16T10:00:53`
 - Source IP: `198.51.100.23` · User: `admin, deploy, ftp, git, guest (+7 more)`
 - First seen: 2026-10-16 10:00:53 · Last seen: 2026-10-16 12:29:35 · Events: 36
 
@@ -118,7 +120,7 @@ Evidence (10 of 36 lines):
 
 ### LS-005 · HIGH · 1 off-hours login(s) for root from 192.168.10.5
 
-- Rule: `off_hours_login`
+- Rule: `off_hours_login` · Key: `off_hours_login/192.168.10.5/root/2026-10-17T04:40:07`
 - Source IP: `192.168.10.5` · User: `root`
 - First seen: 2026-10-17 04:40:07 · Last seen: 2026-10-17 04:40:07 · Events: 1
 
@@ -136,7 +138,7 @@ Evidence (1 of 1 lines):
 
 ### LS-006 · MEDIUM · 1 login(s) for erin from untrusted 198.51.100.77
 
-- Rule: `untrusted_source`
+- Rule: `untrusted_source` · Key: `untrusted_source/198.51.100.77/erin/2026-10-15T11:30:44`
 - Source IP: `198.51.100.77` · User: `erin`
 - First seen: 2026-10-15 11:30:44 · Last seen: 2026-10-15 11:30:44 · Events: 1
 
@@ -154,7 +156,7 @@ Evidence (1 of 1 lines):
 
 ### LS-007 · MEDIUM · 7 failed logins from 10.0.1.77
 
-- Rule: `repeated_failures`
+- Rule: `repeated_failures` · Key: `repeated_failures/10.0.1.77/bob/2026-10-16T14:02:10`
 - Source IP: `10.0.1.77` · User: `bob`
 - First seen: 2026-10-16 14:02:10 · Last seen: 2026-10-16 15:57:45 · Events: 7
 
@@ -178,7 +180,7 @@ Evidence (7 of 7 lines):
 
 ### LS-008 · MEDIUM · 1 login(s) for dave from untrusted 203.0.113.9
 
-- Rule: `untrusted_source`
+- Rule: `untrusted_source` · Key: `untrusted_source/203.0.113.9/dave/2026-10-17T02:17:21`
 - Source IP: `203.0.113.9` · User: `dave`
 - First seen: 2026-10-17 02:17:21 · Last seen: 2026-10-17 02:17:21 · Events: 1
 
@@ -196,7 +198,7 @@ Evidence (1 of 1 lines):
 
 ### LS-009 · LOW · 1 off-hours login(s) for dave from 203.0.113.9
 
-- Rule: `off_hours_login`
+- Rule: `off_hours_login` · Key: `off_hours_login/203.0.113.9/dave/2026-10-17T02:17:21`
 - Source IP: `203.0.113.9` · User: `dave`
 - First seen: 2026-10-17 02:17:21 · Last seen: 2026-10-17 02:17:21 · Events: 1
 
@@ -214,7 +216,7 @@ Evidence (1 of 1 lines):
 
 ### LS-010 · LOW · 1 off-hours login(s) for alice from 10.0.1.20
 
-- Rule: `off_hours_login`
+- Rule: `off_hours_login` · Key: `off_hours_login/10.0.1.20/alice/2026-10-17T10:30:15`
 - Source IP: `10.0.1.20` · User: `alice`
 - First seen: 2026-10-17 10:30:15 · Last seen: 2026-10-17 10:30:15 · Events: 1
 

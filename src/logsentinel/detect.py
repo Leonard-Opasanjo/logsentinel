@@ -6,9 +6,11 @@ import ipaddress
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
+import numpy as np
 import pandas as pd
 
 SEVERITIES = ("critical", "high", "medium", "low")
+MAX_SUDO = 10  # sudo lines added to the evidence of a success after failures
 
 
 @dataclass(frozen=True)
@@ -53,6 +55,11 @@ class Finding:
     count: int
     evidence: list[int] = field(default_factory=list)  # line numbers in the source log
     id: str = ""
+    key: str = field(init=False)  # stable across runs, unlike the id; analyst notes are keyed by it
+
+    def __post_init__(self) -> None:
+        self.evidence = list(dict.fromkeys(self.evidence))  # a folded "message repeated" line counts once
+        self.key = f"{self.rule}/{self.src_ip}/{self.user}/{self.first_seen:%Y-%m-%dT%H:%M:%S}"
 
 
 def _burst(ts: pd.Series, n: int, window: pd.Timedelta) -> bool:
@@ -79,12 +86,12 @@ def failed_logins(ev: pd.DataFrame, cfg: Config) -> list[Finding]:
             why = f"{len(g)} failed logins spread over {n_users} different usernames"
             fix = ("Block the source at the firewall or with fail2ban, check whether any targeted account "
                    "shares a weak password, and move SSH to key-based authentication.")
-        elif _burst(g.timestamp, cfg.brute_threshold, window):
+        elif _burst(g.utc, cfg.brute_threshold, window):
             rule, sev = "brute_force", "high"
             why = f"{len(g)} failed logins, at least {cfg.brute_threshold} within {cfg.window_minutes} minutes"
             fix = ("Block the source, check whether any login from it later succeeded, rate-limit SSH "
                    "(fail2ban, MaxAuthTries) and disable password authentication.")
-        elif _burst(g.timestamp, cfg.fail_threshold, window):
+        elif _burst(g.utc, cfg.fail_threshold, window):
             rule, sev = "repeated_failures", "medium"
             why = f"{len(g)} failed logins, at least {cfg.fail_threshold} within {cfg.window_minutes} minutes"
             fix = ("Confirm with the account owner if the source is internal; otherwise treat it as "
@@ -98,27 +105,40 @@ def failed_logins(ev: pd.DataFrame, cfg: Config) -> list[Finding]:
 
 
 def success_after_failures(ev: pd.DataFrame, cfg: Config) -> list[Finding]:
-    """An accepted login preceded by failures from the same IP inside the look-back window."""
+    """An accepted login preceded by failures from the same IP inside the look-back window.
+
+    The user's sudo lines in the look-back window after the login are added to the evidence.
+    """
     lookback = pd.Timedelta(minutes=cfg.lookback_minutes)
-    fails = ev[ev.event == "failed"]
+    fails = ev[ev.event == "failed"].sort_values("utc", kind="stable")
+    rows = fails.groupby("src_ip").indices  # each source's failures, as positions in time order
+    utc = fails.utc.to_numpy()
+    times = {ip: utc[pos] for ip, pos in rows.items()}
+    sudo = ev[ev.event.isin(("sudo", "sudo_failed"))]
     last_ok: dict[str, pd.Timestamp] = {}
     out = []
-    for a in ev[ev.event == "accepted"].sort_values("timestamp").itertuples():
-        since = max(a.timestamp - lookback, last_ok.get(a.src_ip, pd.Timestamp.min))
-        prior = fails[(fails.src_ip == a.src_ip) & (fails.timestamp > since) & (fails.timestamp <= a.timestamp)]
-        last_ok[a.src_ip] = a.timestamp
-        if len(prior) < cfg.success_min_failures:
+    for a in ev[ev.event == "accepted"].sort_values("utc", kind="stable").itertuples():
+        since = max(a.utc - lookback, last_ok.get(a.src_ip, pd.Timestamp.min))
+        last_ok[a.src_ip] = a.utc
+        if a.src_ip not in times:
             continue
+        # failures in (since, success]: a binary search per login instead of a scan of every failure
+        lo, hi = np.searchsorted(times[a.src_ip], [since.to_datetime64(), a.utc.to_datetime64()], side="right")
+        if hi - lo < cfg.success_min_failures:
+            continue
+        prior = fails.iloc[rows[a.src_ip][lo:hi]]
+        after = sudo[(sudo.user == a.user) & (sudo.utc >= a.utc) & (sudo.utc <= a.utc + lookback)].head(MAX_SUDO)
+        then = f" {a.user} then ran sudo {len(after)} time(s), shown in the evidence." if len(after) else ""
         out.append(Finding(
             "success_after_failures", "critical",
             f"Login for {a.user} from {a.src_ip} after {len(prior)} failures",
             f"{a.method} login for {a.user} succeeded at {a.timestamp:%Y-%m-%d %H:%M:%S} after {len(prior)} "
             f"failed attempts from the same source within {cfg.lookback_minutes} minutes "
-            f"(usernames tried: {_users(prior)}).",
+            f"(usernames tried: {_users(prior)}).{then}",
             "Treat as a possible account compromise: contact the user, review what the session ran "
             "(sudo entries, shell history), rotate the credential and consider isolating the host.",
             a.src_ip, a.user, prior.timestamp.min(), a.timestamp, len(prior) + 1,
-            prior.line_no.tolist() + [a.line_no]))
+            prior.line_no.tolist() + [a.line_no] + after.line_no.tolist()))
     return out
 
 

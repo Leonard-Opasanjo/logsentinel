@@ -1,7 +1,10 @@
+from pathlib import Path
+
 import pandas as pd
 import pytest
 
 from logsentinel.detect import (
+    MAX_SUDO,
     Config,
     _burst,
     failed_logins,
@@ -11,14 +14,14 @@ from logsentinel.detect import (
     to_frame,
     untrusted_source_logins,
 )
-from logsentinel.parser import COLUMNS, parse_lines
+from logsentinel.parser import COLUMNS, parse_file, parse_lines
 
 CFG = Config()
 
 
 def ev(*rows):
     """rows: (timestamp, event, user, src_ip[, method])"""
-    recs = [dict(line_no=i, timestamp=pd.Timestamp(r[0]), host="h", process="sshd", pid="1", event=r[1],
+    recs = [dict(line_no=i, timestamp=pd.Timestamp(r[0]), utc=pd.Timestamp(r[0]), host="h", process="sshd", pid="1", event=r[1],
                  user=r[2], src_ip=r[3], method=r[4] if len(r) > 4 else "password", invalid=False, raw=f"line {i}")
             for i, r in enumerate(rows, 1)]
     return pd.DataFrame(recs, columns=COLUMNS)
@@ -142,3 +145,59 @@ def test_config_accepts_host_bits_and_ipv6():
     assert len(cfg.networks) == 2
     rows = [("2026-10-15 12:00", "accepted", "a", "fd00::1"), ("2026-10-15 12:00", "accepted", "b", "2001:db8::1")]
     assert {f.user for f in untrusted_source_logins(ev(*rows), cfg)} == {"b"}
+
+
+def test_ipv4_and_ipv6_any_turns_untrusted_source_off():
+    rows = [("2026-10-15 12:00", "accepted", "a", "203.0.113.9"), ("2026-10-15 12:00", "accepted", "b", "2001:db8::1")]
+    assert {f.user for f in untrusted_source_logins(ev(*rows), Config(trusted_networks=("0.0.0.0/0",)))} == {"b"}
+    assert untrusted_source_logins(ev(*rows), Config(trusted_networks=("0.0.0.0/0", "::/0"))) == []
+
+
+def test_success_evidence_adds_the_users_sudo_lines_after_the_login():
+    rows = (fails("203.0.113.9", "2026-10-17 02:11", 4, 60)
+            + [("2026-10-17 02:00", "sudo", "dave", None),     # before the login: not evidence
+               ("2026-10-17 02:17", "accepted", "dave", "203.0.113.9"),
+               ("2026-10-17 02:19", "sudo", "carol", None)]      # another user: not evidence
+            + [(f"2026-10-17 02:{20 + i}", "sudo", "dave", None) for i in range(12)]
+            + [("2026-10-17 03:30", "sudo", "dave", None)])      # outside the look-back: not evidence
+    (f,) = success_after_failures(ev(*rows), CFG)
+    assert f.count == 5 and f.evidence == [1, 2, 3, 4, 6] + list(range(8, 8 + MAX_SUDO))
+    assert "dave then ran sudo 10 time(s)" in f.description
+
+
+def _run(lines, **kw):
+    return [(f.rule, f.src_ip) for f in run_all(parse_lines(lines, **kw).events)]
+
+
+def test_success_after_failures_across_new_year_dst_and_folded_lines():
+    new_year = [f"Dec 31 23:5{i}:00 h sshd[1]: Failed password for dave from 10.0.1.9 port {i} ssh2" for i in range(5, 9)]
+    new_year.append("Jan  1 00:01:00 h sshd[2]: Accepted password for dave from 10.0.1.9 port 9 ssh2")
+    assert ("success_after_failures", "10.0.1.9") in _run(new_year, year=2025)
+    # clocks go back at 02:00: the success at 01:05+00:00 is 7 minutes after the last failure, not 53 before it
+    dst = [f"2026-10-25T01:5{i}:00+01:00 h sshd[1]: Failed password for dave from 10.0.1.9 port {i} ssh2"
+           for i in range(5, 9)]
+    dst.append("2026-10-25T01:05:00+00:00 h sshd[2]: Accepted password for dave from 10.0.1.9 port 9 ssh2")
+    assert ("success_after_failures", "10.0.1.9") in _run(dst)
+    folded = ["2026-10-14T10:00:00+03:00 h sshd[7]: Failed password for dave from 10.0.1.9 port 5555 ssh2",
+              "2026-10-14T10:00:04+03:00 h sshd[7]: message repeated 2 times: [ Failed password for dave from "
+              "10.0.1.9 port 5555 ssh2]",
+              "2026-10-14T10:00:09+03:00 h sshd[7]: Accepted password for dave from 10.0.1.9 port 5555 ssh2"]
+    (f,) = [f for f in run_all(parse_lines(folded).events) if f.rule == "success_after_failures"]
+    assert f.count == 4 and f.evidence == [1, 2, 3]  # three failures, each folded line cited once
+
+
+def test_sample_findings_are_unchanged():
+    sample = Path(__file__).resolve().parents[1] / "src/logsentinel/data/sample_auth.log"
+    got = [(f.id, f.severity, f.rule, f.title, f.count) for f in run_all(parse_file(sample).events)]
+    assert got == [
+        ("LS-001", "critical", "success_after_failures", "Login for bob from 10.0.1.77 after 6 failures", 7),
+        ("LS-002", "critical", "success_after_failures", "Login for dave from 203.0.113.9 after 4 failures", 5),
+        ("LS-003", "high", "brute_force", "140 failed logins from 203.0.113.45", 140),
+        ("LS-004", "high", "password_spray", "36 failed logins from 198.51.100.23", 36),
+        ("LS-005", "high", "off_hours_login", "1 off-hours login(s) for root from 192.168.10.5", 1),
+        ("LS-006", "medium", "untrusted_source", "1 login(s) for erin from untrusted 198.51.100.77", 1),
+        ("LS-007", "medium", "repeated_failures", "7 failed logins from 10.0.1.77", 7),
+        ("LS-008", "medium", "untrusted_source", "1 login(s) for dave from untrusted 203.0.113.9", 1),
+        ("LS-009", "low", "off_hours_login", "1 off-hours login(s) for dave from 203.0.113.9", 1),
+        ("LS-010", "low", "off_hours_login", "1 off-hours login(s) for alice from 10.0.1.20", 1),
+    ]

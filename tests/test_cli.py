@@ -1,3 +1,4 @@
+import gzip
 import json
 import subprocess
 import sys
@@ -51,3 +52,39 @@ def test_sample_is_reproducible(tmp_path):
     out = tmp_path / "sample.log"
     subprocess.run([sys.executable, str(ROOT / "scripts/make_sample_log.py"), str(out)], check=True)
     assert out.read_bytes() == SAMPLE.read_bytes()
+
+
+def test_sample_report_cites_the_attackers_sudo_commands(tmp_path, capsys):
+    assert main(["analyze", str(SAMPLE), "--report", str(tmp_path / "r.md")]) == 0
+    assert "467 lines, 280 auth events (0 unparsed, 187 other), 10 findings" in capsys.readouterr().out
+    ls002 = (tmp_path / "r.md").read_text().split("### LS-002")[1].split("### LS-003")[0]
+    assert "COMMAND=/usr/bin/cat /etc/shadow" in ls002 and "Evidence (7 of 7 lines)" in ls002
+
+
+def test_notes_follow_the_finding_key_and_unknown_ids_warn(tmp_path, capsys):
+    notes = tmp_path / "notes.json"
+    notes.write_text(json.dumps({"off_hours_login/192.168.10.5/root/2026-10-17T04:40:07": "Admin maintenance.",
+                                 "LS-099": "stale", "LS-001": None}))
+    # these thresholds renumber the findings: the root login moves from LS-005 to LS-006
+    assert main(["analyze", str(SAMPLE), "--fail-threshold", "2", "--brute-threshold", "5", "--window", "60",
+                 "--json", str(tmp_path / "r.json"), "--report", str(tmp_path / "r.md"), "--notes", str(notes)]) == 0
+    assert "warning: notes for LS-099 match no finding" in capsys.readouterr().err
+    noted = {f["id"]: f["title"] for f in json.loads((tmp_path / "r.json").read_text())["findings"] if f["notes"]}
+    assert noted == {"LS-006": "1 off-hours login(s) for root from 192.168.10.5"}
+
+
+def test_damaged_gzip_exits_2(tmp_path, capsys):
+    bad = tmp_path / "auth.log.2.gz"
+    bad.write_bytes(gzip.compress(SAMPLE.read_bytes())[:3000])
+    assert main(["analyze", str(bad)]) == 2
+    assert "gzip" in capsys.readouterr().err
+
+
+def test_dashboard_turns_telemetry_off_wherever_it_starts(monkeypatch):
+    calls = []
+    monkeypatch.setattr("logsentinel.cli.subprocess.call", lambda cmd: calls.append(cmd) or 0)
+    assert main(["dashboard", "--port", "9000"]) == 0
+    cmd = " ".join(calls[0])
+    assert "streamlit run" in cmd and "--server.port 9000" in cmd and "--server.address localhost" in cmd
+    assert "--browser.gatherUsageStats false" in cmd and "--server.maxUploadSize 50" in cmd
+    assert "--server.headless true" in cmd
