@@ -20,7 +20,7 @@ classifiers = [
     "Topic :: Security",
     "Topic :: System :: Logging",
 ]
-dependencies = ["pandas>=2.1", "streamlit>=1.40"]
+dependencies = ["pandas>=2.1", "streamlit>=1.66.1"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.5", "bandit>=1.9.4", "pip-audit>=2.10.1"]
